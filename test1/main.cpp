@@ -34,7 +34,6 @@ int main(void)
             {
                 running = false;
                 break;
-
             }
         }
     }
