@@ -1,7 +1,7 @@
 #include <iostream>
 #include <chrono>
 #include <thread>
-#include <SDL.h>
+#include <SDL2/SDL.h>
 #include <cstdio>
 
 // You shouldn't really use this statement, but it's fine for small programs
