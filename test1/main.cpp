@@ -1,29 +1,73 @@
-#include <cstdio>
-
+#include <iostream>
+#include <chrono>
+#include <thread>
 #include <SDL.h>
-#include <SDL_timer.h>
 
-int main(void)
-{
-    // Attempt to initialize graphics and timer system.
-    if (SDL_Init(SDL_INIT_VIDEO|SDL_INIT_TIMER) != 0)
-    {
-        printf("error initializing SDL: %s\n", SDL_GetError());
+// You shouldn't really use this statement, but it's fine for small programs
+using namespace std;
+
+void sleep(int millis) {
+    this_thread::sleep_for(chrono::milliseconds(millis));
+}
+
+// You must include the command line parameters for your main function to be recognized by SDL
+int main(int argc, char** args) {
+
+    // Pointers to our window and surface
+    SDL_Surface* winSurface = NULL;
+    SDL_Window* window = NULL;
+
+    // Initialize SDL. SDL_Init will return -1 if it fails.
+    if ( SDL_Init( SDL_INIT_EVERYTHING ) < 0 ) {
+        cout << "Error initializing SDL: " << SDL_GetError() << endl;
+        //system("pause");
+        // End the program
         return 1;
     }
 
-    SDL_Window* window = SDL_CreateWindow("Hello, SDL2 on macOS 🍎",
-                                          SDL_WINDOWPOS_CENTERED,
-                                          SDL_WINDOWPOS_CENTERED,
-                                          640, 480, 0);
-    if (!window)
-    {
-        printf("error creating window: %s\n", SDL_GetError());
-        SDL_Quit();
+    // Create our window
+    window = SDL_CreateWindow( "Example", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 1280, 720, SDL_WINDOW_SHOWN );
+
+    // Make sure creating the window succeeded
+    if ( !window ) {
+        cout << "Error creating window: " << SDL_GetError()  << endl;
+        //system("pause");
+        // End the program
         return 1;
     }
 
-    // Keep the window open, in this case SDL_Delay(5000); statement won't work.
+    // Get the surface from the window
+    winSurface = SDL_GetWindowSurface( window );
+
+    // Make sure getting the surface succeeded
+    if ( !winSurface ) {
+        cout << "Error getting surface: " << SDL_GetError() << endl;
+        //system("pause");
+        // End the program
+        return 1;
+    }
+
+    // Fill the window with a white rectangle
+    for(int i = 0; i < 255; i++) {
+        SDL_FillRect( winSurface, nullptr, SDL_MapRGB( winSurface->format, i, 255-i, 0) );
+        SDL_Event e;
+        bool running=true;
+        while (SDL_PollEvent(&e) != 0)
+        {
+            if (e.type == SDL_QUIT)
+            {
+                running = false;
+                break;
+            }
+        }
+        // Update the window display
+        sleep(10);
+        SDL_UpdateWindowSurface( window );
+    }
+
+
+    // Wait
+    //system("pause");
     bool running = true;
     while (running)
     {
@@ -38,8 +82,12 @@ int main(void)
             }
         }
     }
+    // Destroy the window. This will also destroy the surface
+    SDL_DestroyWindow( window );
 
-    // clean up resources before exiting.
-    SDL_DestroyWindow(window);
+    // Quit SDL
     SDL_Quit();
+
+    // End the program
+    return 0;
 }
