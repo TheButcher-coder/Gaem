@@ -2,6 +2,7 @@
 #include <chrono>
 #include <thread>
 #include <SDL.h>
+#include <cstdio>
 
 // You shouldn't really use this statement, but it's fine for small programs
 using namespace std;
@@ -47,9 +48,11 @@ int main(int argc, char** args) {
         return 1;
     }
 
+
     // Fill the window with a white rectangle
+    /*
     for(int i = 0; i < 255; i++) {
-        SDL_FillRect( winSurface, nullptr, SDL_MapRGB( winSurface->format, i, 255-i, 0) );
+        SDL_FillRect( winSurface, nullptr, SDL_MapRGB( winSurface->format, i, 255-i, i%2*i) );
         SDL_Event e;
         bool running=true;
         while (SDL_PollEvent(&e) != 0)
@@ -64,23 +67,64 @@ int main(int argc, char** args) {
         sleep(10);
         SDL_UpdateWindowSurface( window );
     }
+     */
 
 
-    // Wait
-    //system("pause");
-    bool running = true;
-    while (running)
+
+    //next test of rendering shapes
+    //While application is running
+
+    int SCREEN_WIDTH, SCREEN_HEIGHT;
+    SCREEN_HEIGHT = 720;
+    SCREEN_WIDTH = 1280;
+    bool quit = false;
+    bool success=false;
+    SDL_Event e;
+    SDL_Renderer* gRenderer = SDL_CreateRenderer( window, -1, SDL_RENDERER_ACCELERATED );
+    //Create window
+    SDL_Window* gWindow = SDL_CreateWindow( "Seggs", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
+    if( gWindow == NULL )
     {
-        SDL_Event e;
-        while (SDL_PollEvent(&e) != 0)
+        printf( "Window could not be created! SDL Error: %s\n", SDL_GetError() );
+        success = false;
+    }
+    else
+    {
+        //Create renderer for window
+        gRenderer = SDL_CreateRenderer( gWindow, -1, SDL_RENDERER_ACCELERATED );
+        if( gRenderer == NULL )
         {
-            if (e.type == SDL_QUIT)
+            printf( "Renderer could not be created! SDL Error: %s\n", SDL_GetError() );
+            success = false;
+        }
+        else
+        {
+            //Initialize renderer color
+            SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
+            SDL_RenderCopy(gRenderer, nullptr, nullptr, nullptr);
+        }
+    }
+    //While application is running
+    while( !quit )
+    {
+        //Handle events on queue
+        while( SDL_PollEvent( &e ) != 0 )
+        {
+            //User requests quit
+            if( e.type == SDL_QUIT )
             {
-                running = false;
-                break;
-
+                quit = true;
             }
         }
+
+        //Clear screen
+        //SDL_RenderClear( gRenderer );
+
+        //Render texture to screen
+        //SDL_RenderCopy( gRenderer, nullptr, NULL, NULL );
+
+        //Update screen
+        SDL_RenderPresent( gRenderer );
     }
     // Destroy the window. This will also destroy the surface
     SDL_DestroyWindow( window );
