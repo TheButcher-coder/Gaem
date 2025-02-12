@@ -1,10 +1,9 @@
-#include <iostream>
-#include <SFML/window.hpp>
+#include <SFML/Graphics.hpp>
 
-using namespace std;
-
-int main() {
-  sf::Window window(sf::VideoMode({800, 600}), "My window", sf::Style::Default);
+int main()
+{
+  // create the window
+  sf::RenderWindow window(sf::VideoMode({800, 600}), "My window");
 
   // run the program as long as the window is open
   while (window.isOpen())
@@ -16,6 +15,14 @@ int main() {
       if (event->is<sf::Event::Closed>())
         window.close();
     }
+
+    // clear the window with black color
+    window.clear(sf::Color::Green);
+
+    // draw everything here...
+    // window.draw(...);
+
+    // end the current frame
+    window.display();
   }
-  return 0;
 }
