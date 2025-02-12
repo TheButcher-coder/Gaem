@@ -44,7 +44,7 @@ int main()
         oldpos.y = mouseMoved->position.y;
       }
     }
-    shape2.setPosition(sf::Vector2f(oldpos.x, oldpos.y));
+    shape2.setPosition(sf::Vector2f(oldpos.x - r, oldpos.y - r));
     window.draw(shape2);
 
 
