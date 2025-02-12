@@ -1,6 +1,22 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 
+struct pos {
+  int x, y;
+
+  pos(int X, int Y) {
+    x = X;
+    y = Y;
+  }
+  pos() {
+    x = y = 0;
+  }
+  pos& operator=(pos& a) {
+    x = a.x;
+    y = a.y;
+    return *this;
+  }
+};
 
 int main()
 {
@@ -19,18 +35,24 @@ int main()
 
 
     shape.setFillColor(sf::Color(100, 250, 50));
+    pos oldpos;
     // check all the window's events that were triggered since the last iteration of the loop
     while (const std::optional event = window.pollEvent())
     {
+      sf::CircleShape shape2(50.f);
+      shape2.setFillColor(sf::Color(100, 100, 100));
       if (const auto* mouseMoved = event->getIf<sf::Event::MouseMoved>())
       {
-        sf::CircleShape shape2(50.f);
-        shape2.setFillColor(sf::Color(100, 100, 100));
-        std::cout << "new mouse x: " << mouseMoved->position.x << std::endl;
-        std::cout << "new mouse y: " << mouseMoved->position.y << std::endl;
+        std::cout << "x: " << mouseMoved->position.x;
+        std::cout << "\ty: " << mouseMoved->position.y << std::endl;
         shape2.setPosition(sf::Vector2f(mouseMoved->position.x, mouseMoved->position.y));
-        window.draw(shape2);
+        oldpos.x = mouseMoved->position.x;
+        oldpos.y =mouseMoved->position.y;
       }
+      else {
+        shape2.setPosition(sf::Vector2f(oldpos.x, oldpos.y));
+      }
+      window.draw(shape2);
     }
 
 
