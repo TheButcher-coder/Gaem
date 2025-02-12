@@ -24,7 +24,7 @@ int main()
   // create the window
   sf::RenderWindow window(sf::VideoMode({800, 600}), "My window");
   pos oldpos;
-  float r = 50;
+  float r = 100;
 
   // run the program as long as the window is open
   while (window.isOpen())
@@ -32,9 +32,9 @@ int main()
     window.clear(sf::Color::White);
     sf::CircleShape shape(r);
 
-    shape.setFillColor(sf::Color(100, 250, 50));
+    shape.setFillColor(sf::Color(255, 250, 50));
     sf::CircleShape shape2(r);
-    shape2.setFillColor(sf::Color(100, 100, 100));
+    shape2.setFillColor(sf::Color(255, 255, 255));
     // check all the window's events that were triggered since the last iteration of the loop
     while (const std::optional event = window.pollEvent())
     {
