@@ -15,29 +15,26 @@ int main()
 
     // draw everything here...
     sf::CircleShape shape(50.f);
-    sf::CircleShape shape2(50.f);
 
-    shape2.setFillColor(sf::Color(100, 100, 100));
+
+
     shape.setFillColor(sf::Color(100, 250, 50));
     // check all the window's events that were triggered since the last iteration of the loop
     while (const std::optional event = window.pollEvent())
     {
-      if (const auto* mouseButtonPressed = event->getIf<sf::Event::MouseButtonPressed>())
+      if (const auto* mouseMoved = event->getIf<sf::Event::MouseMoved>())
       {
-        if (mouseButtonPressed->button == sf::Mouse::Button::Right)
-        {
-          std::cout << "the right button was pressed" << std::endl;
-          std::cout << "mouse x: " << mouseButtonPressed->position.x << std::endl;
-          std::cout << "mouse y: " << mouseButtonPressed->position.y << std::endl;
-          shape2.setPosition(sf::Vector2f(mouseButtonPressed->position.x, mouseButtonPressed->position.y));
-          window.draw(shape2);
-        }
+        sf::CircleShape shape2(50.f);
+        shape2.setFillColor(sf::Color(100, 100, 100));
+        std::cout << "new mouse x: " << mouseMoved->position.x << std::endl;
+        std::cout << "new mouse y: " << mouseMoved->position.y << std::endl;
+        shape2.setPosition(sf::Vector2f(mouseMoved->position.x, mouseMoved->position.y));
+        window.draw(shape2);
       }
-
     }
 
 
-    window.draw(shape2);
+    //window.draw(shape2);
     // set the shape color to green
 
 
