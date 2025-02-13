@@ -1,7 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include "pos.h"
-
+#include "Circle.h"
 
 
 int main()
@@ -10,6 +10,8 @@ int main()
     sf::RenderWindow window(sf::VideoMode({800, 600}), "My window");
     Pos oldpos, p0;
     float r = 50;
+
+    Circle ctest(Pos(0, 0), 50);
 
     // run the program as long as the window is open
     while (window.isOpen())
