@@ -9,7 +9,7 @@
 #include <SFML/Graphics.hpp>
 
 class Point {
-private:
+protected:
     Pos p;
 
 public:
@@ -19,7 +19,9 @@ public:
 
     Pos get_pos();
     void set_pos(Pos in);
-    virtual void render(sf::RenderWindow win);
+    virtual void render(sf::RenderWindow win)=0;
+
+    virtual ~Point() {}
 };
 
 

@@ -12,9 +12,13 @@
  *Shits massively undone
  */
 class Circle:public Point{
+private:
+    int r;
+    sf::CircleShape c;
 public:
     Circle();
-    Circle(Pos p, int r);
+    Circle(sf::CircleShape in);
+    Circle(Pos pin, int rin);
     void render(sf::RenderWindow win) override;
 };
 
