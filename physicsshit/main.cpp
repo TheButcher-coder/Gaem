@@ -14,21 +14,26 @@ void falling_circ_TEST() {
 
     while (win.isOpen()) {
         win.clear(sf::Color::Black);
-        y = 1/2*g*t*t;
+
+        //calculate bal pos
+        //y = 1/2*g*t*t/1000;
         c1.setPosition(sf::Vector2f(x, y));
+
+        //t += 1;
+        win.draw(c1);
+        win.display();
     }
 }
 
-int main()
-{
+void test() {
     // create the window
     sf::RenderWindow window(sf::VideoMode({800, 600}), "My window");
     Pos oldpos, p0;
     float r = 50;
 
-    falling_circ_TEST();
+    //falling_circ_TEST();
     // run the program as long as the window is open
-    /*
+
     while (window.isOpen())
     {
         window.clear(sf::Color::White);
@@ -50,5 +55,10 @@ int main()
 
         window.display();
     }
-    */
+}
+
+int main()
+{
+    test();
+    return 0;
 }
