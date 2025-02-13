@@ -8,7 +8,7 @@ int main()
 {
     // create the window
     sf::RenderWindow window(sf::VideoMode({800, 600}), "My window");
-    Pos oldpos;
+    Pos oldpos, p0;
     float r = 50;
 
     // run the program as long as the window is open

@@ -24,7 +24,7 @@ public:
     void set_y(int y);
 
     Pos& operator=(Pos &a);
-    Pos& operator=(sf::Event::MouseMoved& in);
+    //Pos& operator=(sf::Event::MouseMoved& in);
 
     Pos &operator=(sf::Event::MouseMoved mouse_moved);
 };

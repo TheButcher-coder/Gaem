@@ -37,14 +37,14 @@ Pos& Pos::operator=(Pos &a) {
 
     return *this;
 }
-
+/*
 Pos& Pos::operator=(sf::Event::MouseMoved& in) {
     this->x = in.position.x;
     this->y = in.position.y;
 
     return *this;
 }
-
+*/
 Pos &Pos::operator=(sf::Event::MouseMoved mouse_moved) {
     this->x = mouse_moved.position.x;
     this->y = mouse_moved.position.y;
