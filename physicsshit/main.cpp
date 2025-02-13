@@ -1,8 +1,23 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include "pos.h"
-#include "Circle.h"
 
+void falling_circ_TEST() {
+    sf::RenderWindow win(sf::VideoMode({1000, 1000}), "test falling Ball");
+    sf::CircleShape c1(50);
+    c1.setFillColor(sf::Color::Cyan);
+    int x, y, t;
+    y = t = 0;
+    x = 500;
+    double g = 9.81;
+
+
+    while (win.isOpen()) {
+        win.clear(sf::Color::Black);
+        y = 1/2*g*t*t;
+        c1.setPosition(sf::Vector2f(x, y));
+    }
+}
 
 int main()
 {
@@ -11,9 +26,9 @@ int main()
     Pos oldpos, p0;
     float r = 50;
 
-    Circle ctest(Pos(0, 0), 50);
-
+    falling_circ_TEST();
     // run the program as long as the window is open
+    /*
     while (window.isOpen())
     {
         window.clear(sf::Color::White);
@@ -35,4 +50,5 @@ int main()
 
         window.display();
     }
+    */
 }
