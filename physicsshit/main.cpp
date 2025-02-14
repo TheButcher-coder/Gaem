@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <time.h>
+#include <chrono>
 #include "pos.h"
 
 
@@ -16,11 +17,32 @@ int get_sec() {
     return difftime(timer,mktime(&y2k));;
 }
 
+int get_millisec() {
+    // Get the current time from the system clock
+    auto now = std::chrono::system_clock::now();
+
+    // Convert the current time to time since epoch
+    auto duration = now.time_since_epoch();
+
+    // Convert duration to milliseconds
+    auto milliseconds
+        = std::chrono::duration_cast<std::chrono::milliseconds>(
+              duration)
+              .count();
+
+    return milliseconds;
+}
+
 
 void falling_circ_TEST() {
     // create the window
     sf::RenderWindow window(sf::VideoMode({800, 600}), "My window");
     Pos oldpos, p0;
+    int x, y, t, t0;
+
+    t0 = get_sec();
+    x = 400;
+
     float r = 50;
 
     // run the program as long as the window is open
@@ -37,7 +59,13 @@ void falling_circ_TEST() {
             if (event->getIf<sf::Event::Closed>()) window.close();  //man kann das window schließen yay
         }
         shape2.setOrigin(sf::Vector2f(r, r));   //setzt den Urpsung in die mitte-> kein offset um -r mehr :)
-        shape2.setPosition(sf::Vector2f(400, 300));
+        //calculate ballpos
+
+        t = get_sec() - t0;
+        y = 0.5*9.81*t*t;
+        std:: cout << "Zeit: " << t << std::endl << "y: " << y << std::endl;
+
+        shape2.setPosition(sf::Vector2f(x, y));
         window.draw(shape2);
         window.display();
     }
