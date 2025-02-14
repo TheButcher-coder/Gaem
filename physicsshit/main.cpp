@@ -38,32 +38,49 @@ int get_millisec() {
 
 void airhockeything() {
     //window setup
-    sf::RenderWindow win(sf::VideoMode({1000, 1000}), "airhoggey");
+    sf::RenderWindow win(sf::VideoMode({800, 600}), "airhoggey");
     srand(time(NULL));     //init rnaodm
 
     int r = 25, n_balls = 10;
-    std::vector<std::unique_ptr<sf::CircleShape>> balls;
+    std::vector<std::unique_ptr<sf::CircleShape>> balls;    //Ball vektor
+    std::vector<std::unique_ptr<Pos>> v_balls;
     //place 10 random Balls
     for (int i = 0; i < n_balls; i++) {
+        //Random initial pos
         balls.emplace_back(std::make_unique<sf::CircleShape>(sf::CircleShape(r)));
-        balls[i]->setPosition(sf::Vector2f(rand()%1000, rand()%1000));
-        //win.draw(*balls[i]);
+        balls[i]->setPosition(sf::Vector2f(rand()%(800-r), rand()%(600-r)));
+
+        v_balls.emplace_back(std::make_unique<Pos>(Pos(0, 0)));
     }
+
     while (win.isOpen()) {
         win.clear(sf::Color::White);
-        if (win.pollEvent()->getIf<sf::Event::Closed>()) win.close();
+        if (win.pollEvent()->getIf<sf::Event::Closed>()) win.close();   //close window
         for (auto& ball:balls) {
-            ball->setFillColor(sf::Color::Red);
+            ball->setFillColor(sf::Color::Red);     //place balls
             win.draw(*ball);
+        }
+
+        //Check colissions
+        for (int i=0; i < n_balls; i++) {
+            for (int j=i+1; i < n_balls; j++) {
+                if (balls[i]->getGlobalBounds().findIntersection(balls[j]->getGlobalBounds()).has_value()) {
+                    //COLLISION AHEAD!
+                    *v_balls[i] = (*v_balls[i] - *v_balls[j]);     //Define - for pos
+                    *v_balls[j] = (*v_balls[j] - *v_balls[i]);
+                }
+            }
         }
         win.display();
     }
+    //TODO:
+    //mabe balls movable
+    //Collisions
 }
 
 void falling_circ_TEST() {
     // create the window
     sf::RenderWindow window(sf::VideoMode({800, 600}), "My window");
-    Pos oldpos, p0;
     double x, y, t, t0;
 
     t0 = get_millisec();

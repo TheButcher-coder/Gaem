@@ -14,19 +14,24 @@ private:
     int y;
 
 public:
-    Pos();
-    Pos(int X, int Y);
-    Pos(Pos &a);
+    //Pos();
+    //Pos(int X, int Y);
+    Pos(int x = 0, int y = 0) : x(x), y(y) {} // Default values allow empty constructor
+
+    Pos(const Pos &a);
 
     int get_x();
     int get_y();
     void set_x(int x);
     void set_y(int y);
 
-    Pos& operator=(Pos &a);
+    Pos& operator=(const Pos &a);
     //Pos& operator=(sf::Event::MouseMoved& in);
 
     Pos &operator=(sf::Event::MouseMoved mouse_moved);
+    Pos &operator+(const Pos &a);
+    Pos &operator-(const Pos &a);
+
 };
 
 
