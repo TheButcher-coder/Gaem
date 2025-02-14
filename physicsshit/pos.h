@@ -22,8 +22,10 @@ public:
 
     int get_x();
     int get_y();
+    sf::Vector2f get_v2f();
     void set_x(int x);
     void set_y(int y);
+    void set(int x, int y);
 
     Pos& operator=(const Pos &a);
     //Pos& operator=(sf::Event::MouseMoved& in);

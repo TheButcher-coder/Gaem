@@ -69,3 +69,13 @@ Pos &Pos::operator-(const Pos &a) {
 
     return *this;
 }
+
+void Pos::set(int x, int y) {
+    this->x = x;
+    this->y = y;
+}
+
+
+sf::Vector2f Pos::get_v2f() {
+    return sf::Vector2f(x, y);
+}

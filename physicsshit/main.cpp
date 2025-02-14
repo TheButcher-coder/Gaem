@@ -42,6 +42,7 @@ void airhockeything() {
     srand(time(NULL));     //init rnaodm
 
     int r = 25, n_balls = 10;
+    double t, t0=get_millisec();
     std::vector<std::unique_ptr<sf::CircleShape>> balls;    //Ball vektor
     std::vector<std::unique_ptr<Pos>> v_balls;
     //place 10 random Balls
@@ -49,21 +50,19 @@ void airhockeything() {
         //Random initial pos
         balls.emplace_back(std::make_unique<sf::CircleShape>(sf::CircleShape(r)));
         balls[i]->setPosition(sf::Vector2f(rand()%(800-r), rand()%(600-r)));
-
-        v_balls.emplace_back(std::make_unique<Pos>(Pos(1, 1)));
+        //init speeds
+        v_balls.emplace_back(std::make_unique<Pos>(Pos(0, 0)));
     }
+    v_balls[0]->set(1, 1);      //test der bewegung
+
 
     while (win.isOpen()) {
+        t = get_millisec() - t0;
+
+        //window stuff
         win.clear(sf::Color::White);
         if (win.pollEvent()->getIf<sf::Event::Closed>()) win.close();   //close window
-        for (int i=0; i < n_balls; i++) {
-            Pos temp = balls[i]->getPosition();
-        }
-        for (auto& ball:balls) {
-            ball->setFillColor(sf::Color::Red);     //place balls
-            win.draw(*ball);
-        }
-
+/*
         //Check colissions
         for (int i=0; i < n_balls; i++) {
             for (int j=i+1; j < n_balls; j++) {
@@ -74,11 +73,21 @@ void airhockeything() {
                 }
             }
         }
+        */
+
+
+        for (auto& ball:balls) {
+            //render each ball
+            ball->setFillColor(sf::Color::Red);     //place balls
+            win.draw(*ball);
+        }
         win.display();
+
+
+        for (int i = 0; i < n_balls; i++) {
+            balls[i]->setPosition(balls[i]->getPosition() + (v_balls[i]->get_v2f())*static_cast<float>(t));
+        }
     }
-    //TODO:
-    //mabe balls movable
-    //Collisions
 }
 
 void falling_circ_TEST() {
