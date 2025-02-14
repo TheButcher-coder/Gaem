@@ -50,12 +50,15 @@ void airhockeything() {
         balls.emplace_back(std::make_unique<sf::CircleShape>(sf::CircleShape(r)));
         balls[i]->setPosition(sf::Vector2f(rand()%(800-r), rand()%(600-r)));
 
-        v_balls.emplace_back(std::make_unique<Pos>(Pos(0, 0)));
+        v_balls.emplace_back(std::make_unique<Pos>(Pos(1, 1)));
     }
 
     while (win.isOpen()) {
         win.clear(sf::Color::White);
         if (win.pollEvent()->getIf<sf::Event::Closed>()) win.close();   //close window
+        for (int i=0; i < n_balls; i++) {
+            Pos temp = balls[i]->getPosition();
+        }
         for (auto& ball:balls) {
             ball->setFillColor(sf::Color::Red);     //place balls
             win.draw(*ball);

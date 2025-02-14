@@ -9,6 +9,10 @@ Pos::Pos(const Pos &a) {
     *this = a;
 }
 
+Pos::Pos(sf::Vector2f in) {
+    *this = in;
+}
+
 
 int Pos::get_x() {
     return x;
@@ -41,6 +45,13 @@ Pos& Pos::operator=(sf::Event::MouseMoved& in) {
 Pos &Pos::operator=(sf::Event::MouseMoved mouse_moved) {
     this->x = mouse_moved.position.x;
     this->y = mouse_moved.position.y;
+
+    return *this;
+}
+
+Pos &Pos::operator=(sf::Vector2f in) {
+    this->x = in.x;
+    this->y = in.y;
 
     return *this;
 }

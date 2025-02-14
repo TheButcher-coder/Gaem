@@ -17,7 +17,7 @@ public:
     //Pos();
     //Pos(int X, int Y);
     Pos(int x = 0, int y = 0) : x(x), y(y) {} // Default values allow empty constructor
-
+    Pos(sf::Vector2f in);
     Pos(const Pos &a);
 
     int get_x();
@@ -29,6 +29,7 @@ public:
     //Pos& operator=(sf::Event::MouseMoved& in);
 
     Pos &operator=(sf::Event::MouseMoved mouse_moved);
+    Pos &operator=(sf::Vector2f in);
     Pos &operator+(const Pos &a);
     Pos &operator-(const Pos &a);
 
