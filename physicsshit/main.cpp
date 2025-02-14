@@ -2,6 +2,9 @@
 #include <iostream>
 #include <time.h>
 #include <chrono>
+#include <stdlib.h>
+#include <vector>
+
 #include "pos.h"
 
 
@@ -33,6 +36,29 @@ int get_millisec() {
     return milliseconds;
 }
 
+void airhockeything() {
+    //window setup
+    sf::RenderWindow win(sf::VideoMode({1000, 1000}), "airhoggey");
+    srand(time(NULL));     //init rnaodm
+
+    int r = 25, n_balls = 10;
+    std::vector<std::unique_ptr<sf::CircleShape>> balls;
+    //place 10 random Balls
+    for (int i = 0; i < n_balls; i++) {
+        balls.emplace_back(std::make_unique<sf::CircleShape>(sf::CircleShape(r)));
+        balls[i]->setPosition(sf::Vector2f(rand()%1000, rand()%1000));
+        //win.draw(*balls[i]);
+    }
+    while (win.isOpen()) {
+        win.clear(sf::Color::White);
+        if (win.pollEvent()->getIf<sf::Event::Closed>()) win.close();
+        for (auto& ball:balls) {
+            ball->setFillColor(sf::Color::Red);
+            win.draw(*ball);
+        }
+        win.display();
+    }
+}
 
 void falling_circ_TEST() {
     // create the window
@@ -46,7 +72,6 @@ void falling_circ_TEST() {
     float r = 50;
 
     // run the program as long as the window is open
-
     while (window.isOpen())
     {
         window.clear(sf::Color::White);
@@ -100,6 +125,6 @@ void test() {
 }
 
 int main() {
-    falling_circ_TEST();
+    airhockeything();
     return 0;
 }
