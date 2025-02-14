@@ -15,26 +15,31 @@ int get_sec() {
 
     return difftime(timer,mktime(&y2k));;
 }
+
+
 void falling_circ_TEST() {
-    sf::RenderWindow win(sf::VideoMode({1000, 1000}), "test falling Ball");
-    sf::CircleShape c1(50);
-    c1.setFillColor(sf::Color::Cyan);
-    int x, y, t;
-    y = t = 0;
-    x = 500;
-    double g = 9.81;
+    // create the window
+    sf::RenderWindow window(sf::VideoMode({800, 600}), "My window");
+    Pos oldpos, p0;
+    float r = 50;
 
+    // run the program as long as the window is open
 
-    while (win.isOpen()) {
-        win.clear(sf::Color::Black);
+    while (window.isOpen())
+    {
+        window.clear(sf::Color::White);
+        sf::CircleShape shape2(r);
 
-        //calculate bal pos
-        //y = 1/2*g*t*t/1000;
-        c1.setPosition(sf::Vector2f(x, y));
-
-        //t += 1;
-        win.draw(c1);
-        win.display();
+        shape2.setFillColor(sf::Color(0, 0, 0));
+        // check all the window's events that were triggered since the last iteration of the loop
+        while (const std::optional event = window.pollEvent())
+        {
+            if (event->getIf<sf::Event::Closed>()) window.close();  //man kann das window schließen yay
+        }
+        shape2.setOrigin(sf::Vector2f(r, r));   //setzt den Urpsung in die mitte-> kein offset um -r mehr :)
+        shape2.setPosition(sf::Vector2f(400, 300));
+        window.draw(shape2);
+        window.display();
     }
 }
 
@@ -44,16 +49,13 @@ void test() {
     Pos oldpos, p0;
     float r = 50;
 
-    //falling_circ_TEST();
     // run the program as long as the window is open
 
     while (window.isOpen())
     {
         window.clear(sf::Color::White);
-        sf::CircleShape shape(r);
-
-        shape.setFillColor(sf::Color(255, 250, 50));
         sf::CircleShape shape2(r);
+
         shape2.setFillColor(sf::Color(0, 0, 0));
         // check all the window's events that were triggered since the last iteration of the loop
         while (const std::optional event = window.pollEvent())
@@ -65,13 +67,11 @@ void test() {
         }
         shape2.setPosition(sf::Vector2f(oldpos.get_x() - r, oldpos.get_y() - r));
         window.draw(shape2);
-
         window.display();
     }
 }
 
-int main()
-{
-    test();
+int main() {
+    falling_circ_TEST();
     return 0;
 }
