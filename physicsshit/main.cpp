@@ -1,7 +1,20 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include <time.h>
 #include "pos.h"
 
+
+int get_sec() {
+    time_t timer;
+    time(&timer);
+
+    struct tm y2k = {0};        //what is this sorcery?
+
+    y2k.tm_hour = 0;   y2k.tm_min = 0; y2k.tm_sec = 0;
+    y2k.tm_year = 100; y2k.tm_mon = 0; y2k.tm_mday = 1;
+
+    return difftime(timer,mktime(&y2k));;
+}
 void falling_circ_TEST() {
     sf::RenderWindow win(sf::VideoMode({1000, 1000}), "test falling Ball");
     sf::CircleShape c1(50);
