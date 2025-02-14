@@ -63,7 +63,7 @@ void airhockeything() {
 
         //Check colissions
         for (int i=0; i < n_balls; i++) {
-            for (int j=i+1; i < n_balls; j++) {
+            for (int j=i+1; j < n_balls; j++) {
                 if (balls[i]->getGlobalBounds().findIntersection(balls[j]->getGlobalBounds()).has_value()) {
                     //COLLISION AHEAD!
                     *v_balls[i] = (*v_balls[i] - *v_balls[j]);     //Define - for pos
