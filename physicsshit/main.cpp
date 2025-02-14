@@ -38,9 +38,9 @@ void falling_circ_TEST() {
     // create the window
     sf::RenderWindow window(sf::VideoMode({800, 600}), "My window");
     Pos oldpos, p0;
-    int x, y, t, t0;
+    double x, y, t, t0;
 
-    t0 = get_sec();
+    t0 = get_millisec();
     x = 400;
 
     float r = 50;
@@ -61,11 +61,11 @@ void falling_circ_TEST() {
         shape2.setOrigin(sf::Vector2f(r, r));   //setzt den Urpsung in die mitte-> kein offset um -r mehr :)
         //calculate ballpos
 
-        t = get_sec() - t0;
+        t = (get_millisec() - t0)/1000;
         y = 0.5*9.81*t*t;
         std:: cout << "Zeit: " << t << std::endl << "y: " << y << std::endl;
 
-        shape2.setPosition(sf::Vector2f(x, y));
+        shape2.setPosition(sf::Vector2f(int(x), int(y)));
         window.draw(shape2);
         window.display();
     }
