@@ -51,13 +51,17 @@ void airhockeything() {
         balls.emplace_back(std::make_unique<sf::CircleShape>(sf::CircleShape(r)));
         balls[i]->setPosition(sf::Vector2f(rand()%(800-r), rand()%(600-r)));
         //init speeds
-        v_balls.emplace_back(std::make_unique<Pos>(Pos(0, 0)));
+        v_balls.emplace_back(std::make_unique<Pos>(Pos(1, 1)));
     }
     v_balls[0]->set(1, 1);      //test der bewegung
 
 
     while (win.isOpen()) {
-        t = get_millisec() - t0;
+        double t1 = get_millisec();
+        double t = (t1 - t0) / 1000.0; // In Sekunden umwandeln
+        if (t > 1.0) t = 0.016; // Falls `t` zu groß wird, begrenzen (16ms ≈ 60 FPS)
+        t0 = t1; // t0 aktualisieren
+
 
         //window stuff
         win.clear(sf::Color::White);
@@ -65,7 +69,7 @@ void airhockeything() {
 
         for (int i = 0; i < n_balls; i++) {
                     //Move balls
-                    balls[i]->setPosition(balls[i]->getPosition() + (v_balls[i]->get_v2f())*static_cast<float>(t/1000));
+                    balls[i]->setPosition(balls[i]->getPosition() + (v_balls[i]->get_v2f())*static_cast<float>(t));
                 }
 
         /*
@@ -95,7 +99,7 @@ void airhockeything() {
             Pos(ball->getPosition()).print();
         }
         */
-        std::cout << t/1000 << std::endl;
+        std::cout << "ZEIT: " << t << std::endl;
     }
 }
 
