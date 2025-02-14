@@ -5,7 +5,8 @@
 #ifndef Pos_H
 #define Pos_H
 
-#include<SFML/Graphics.hpp>
+#include <iostream>
+#include <SFML/Graphics.hpp>
 
 
 class Pos {
@@ -29,6 +30,9 @@ public:
 
     Pos& operator=(const Pos &a);
     //Pos& operator=(sf::Event::MouseMoved& in);
+
+    void print();
+
 
     Pos &operator=(sf::Event::MouseMoved mouse_moved);
     Pos &operator=(sf::Vector2f in);

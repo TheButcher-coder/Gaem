@@ -62,7 +62,13 @@ void airhockeything() {
         //window stuff
         win.clear(sf::Color::White);
         if (win.pollEvent()->getIf<sf::Event::Closed>()) win.close();   //close window
-/*
+
+        for (int i = 0; i < n_balls; i++) {
+                    //Move balls
+                    balls[i]->setPosition(balls[i]->getPosition() + (v_balls[i]->get_v2f())*static_cast<float>(t/1000));
+                }
+
+        /*
         //Check colissions
         for (int i=0; i < n_balls; i++) {
             for (int j=i+1; j < n_balls; j++) {
@@ -76,17 +82,20 @@ void airhockeything() {
         */
 
 
+
         for (auto& ball:balls) {
             //render each ball
             ball->setFillColor(sf::Color::Red);     //place balls
             win.draw(*ball);
         }
         win.display();
-
-
-        for (int i = 0; i < n_balls; i++) {
-            balls[i]->setPosition(balls[i]->getPosition() + (v_balls[i]->get_v2f())*static_cast<float>(t));
+        t0 = t;
+        /*
+        for (auto& ball:balls) {
+            Pos(ball->getPosition()).print();
         }
+        */
+        std::cout << t/1000 << std::endl;
     }
 }
 

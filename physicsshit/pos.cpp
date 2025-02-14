@@ -79,3 +79,8 @@ void Pos::set(int x, int y) {
 sf::Vector2f Pos::get_v2f() {
     return sf::Vector2f(x, y);
 }
+
+
+void Pos::print() {
+    std::cout << "X: " << x << "Y: " << y  << std::endl;
+}
