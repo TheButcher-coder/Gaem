@@ -37,7 +37,7 @@ int get_millisec() {
 
 void pong() {
     //Init all stuff thats needed
-    int r = 10;
+    int r = 10, scorep1=0, scorep2=0;
     int winx=800, winy=400;
     int px=20, py=100;
 
@@ -95,6 +95,17 @@ void pong() {
         if (pos.y + r > winy) v_ball.set_y(-v_ball.get_y());
         else if (pos.y + r < 0) v_ball.set_y(-v_ball.get_y());
 
+        //check x bounds
+        if (pos.x + r > winx) {
+            std::cout << "+1 for Player 1!" << std::endl;
+            scorep1++;
+        }
+        else if (pos.x + r < 0) {
+            std::cout << "+1 for Player 2!" << std::endl;
+            scorep2++;
+        }
+
+        if (p1.getGlobalBounds().findIntersection(ball.getGlobalBounds()).has_value() || p2.getGlobalBounds().findIntersection(ball.getGlobalBounds())) v_ball.set_x(-v_ball.get_x());
         ball.setPosition(sf::Vector2f(pos.x + v_ball.get_x()/ballmult, pos.y + v_ball.get_y()/ ballmult));
 
         win.draw(ball);
