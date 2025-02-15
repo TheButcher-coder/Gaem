@@ -3,6 +3,7 @@
 #include <time.h>
 #include <chrono>
 #include <stdlib.h>
+#include <thread>
 
 #include "pos.h"
 
@@ -42,7 +43,7 @@ void pong() {
 
     //init random
     srand(time(NULL));
-    Pos v_ball((rand()%100)/100, (rand()%100)/100);   //initial speed of ball
+    Pos v_ball(0, 1);   //initial speed of ball
     sf::RenderWindow win(sf::VideoMode({static_cast<unsigned>(winx), static_cast<unsigned>(winy)}), "Pong");
 
     sf::RectangleShape p1(sf::Vector2f(px, py));   //Player 1
@@ -73,12 +74,12 @@ void pong() {
                 p1.setPosition(sf::Vector2f(pos1.x, pos1.y + 1));
             }
         }
-        if (pos2.y > 0) {
+        if (pos2.y - 1 > 0) {
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up)) {
                 p2.setPosition(sf::Vector2f(pos2.x, pos2.y - 1));
             }
         }
-        if (pos2.y < winy-py) {
+        if (pos2.y + 1 < winy-py) {
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down)) {
                 p2.setPosition(sf::Vector2f(pos2.x, pos2.y + 1));
             }
@@ -86,13 +87,22 @@ void pong() {
 
         //move ball
         auto pos = ball.getPosition();
-        ball.setPosition(sf::Vector2f(pos.x + v_ball.get_x(), pos.y + v_ball.get_y()));
+        Pos t = pos;
+        t.print();
+        int ballmult=1;
+
+        //Check y bounds
+        if (pos.y + r > winy) v_ball.set_y(-v_ball.get_y());
+        else if (pos.y + r < 0) v_ball.set_y(-v_ball.get_y());
+
+        ball.setPosition(sf::Vector2f(pos.x + v_ball.get_x()/ballmult, pos.y + v_ball.get_y()/ ballmult));
 
         win.draw(ball);
         win.draw(p1);
         win.draw(p2);
         if (win.pollEvent()->getIf<sf::Event::Closed>()) win.close();   //close window if close button pressed
         win.display();
+        std::this_thread::sleep_for(std::chrono::milliseconds(3));     //tweak für andere geschwindigkeiten
     }
 }
 
