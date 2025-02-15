@@ -48,6 +48,24 @@ void pong() {
     while (win.isOpen()) {
         //TEST
         win.clear(sf::Color::Black);
+
+        //Keylistener shit
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W)) {
+            auto pos = p1.getPosition();
+            p1.setPosition(sf::Vector2f(pos.x, pos.y - 1));
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)) {
+            auto pos = p1.getPosition();
+            p1.setPosition(sf::Vector2f(pos.x, pos.y + 1));
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up)) {
+            auto pos = p2.getPosition();
+            p2.setPosition(sf::Vector2f(pos.x, pos.y - 1));
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down)) {
+            auto pos = p2.getPosition();
+            p2.setPosition(sf::Vector2f(pos.x, pos.y + 1));
+        }
         win.draw(ball);
         win.draw(p1);
         win.draw(p2);
