@@ -62,22 +62,28 @@ void pong() {
         //Keylistener shit
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W)) {
             auto pos = p1.getPosition();
-            if (pos.y > 0 && pos.y < winx - px) p1.setPosition(sf::Vector2f(pos.x, pos.y - 1));
+            if (pos.y - 5 >= 0 && pos.y <= winy - py - 1) p1.setPosition(sf::Vector2f(pos.x, pos.y - 1));
+            else {
+                p1.setPosition(sf::Vector2f(pos.x, pos.y + 1));
+            }
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)) {
             auto pos = p1.getPosition();
-            if (pos.y > 0 && pos.y < winx - px) p1.setPosition(sf::Vector2f(pos.x, pos.y + 1));
+            if (pos.y - 5 >= 0 && pos.y <= winy - py - 1) p1.setPosition(sf::Vector2f(pos.x, pos.y + 1));
+            else {
+                p1.setPosition(sf::Vector2f(pos.x, pos.y - 1));
+            }
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up)) {
             auto pos = p2.getPosition();
-            if (pos.y > 0 && pos.y < winx - px) p2.setPosition(sf::Vector2f(pos.x, pos.y - 1));
+            if (pos.y > 0 && pos.y < winy - py) p2.setPosition(sf::Vector2f(pos.x, pos.y - 1));
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down)) {
             auto pos = p2.getPosition();
-            if (pos.y > 0 && pos.y < winx - px) p2.setPosition(sf::Vector2f(pos.x, pos.y + 1));
+            if (pos.y > 0 && pos.y < winy - py) p2.setPosition(sf::Vector2f(pos.x, pos.y + 1));
         }
 
-        //aAAAAAA
+
         //move ball
         auto pos = ball.getPosition();
         ball.setPosition(sf::Vector2f(pos.x + v_ball.get_x(), pos.y + v_ball.get_y()));
