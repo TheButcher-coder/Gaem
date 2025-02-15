@@ -60,29 +60,29 @@ void pong() {
         win.clear(sf::Color::Black);
 
         //Keylistener shit
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W)) {
-            auto pos = p1.getPosition();
-            if (pos.y - 5 >= 0 && pos.y <= winy - py - 5) p1.setPosition(sf::Vector2f(pos.x, pos.y - 1));
-            else {
-                p1.setPosition(sf::Vector2f(pos.x, pos.y + 1));
-            }
-        }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)) {
-            auto pos = p1.getPosition();
-            if (pos.y - 5 >= 0 && pos.y <= winy - py - 5) p1.setPosition(sf::Vector2f(pos.x, pos.y + 1));
-            else {
-                p1.setPosition(sf::Vector2f(pos.x, pos.y - 1));
-            }
-        }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up)) {
-            auto pos = p2.getPosition();
-            if (pos.y > 0 && pos.y < winy - py) p2.setPosition(sf::Vector2f(pos.x, pos.y - 1));
-        }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down)) {
-            auto pos = p2.getPosition();
-            if (pos.y > 0 && pos.y < winy - py) p2.setPosition(sf::Vector2f(pos.x, pos.y + 1));
-        }
 
+        auto pos1=p1.getPosition(), pos2=p2.getPosition();
+
+        if (pos1.y - 1> 0) {
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W)) {
+                p1.setPosition(sf::Vector2f(pos1.x, pos1.y - 1));
+            }
+        }
+        if (pos1.y + 1 < winy-py) {
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)) {
+                p1.setPosition(sf::Vector2f(pos1.x, pos1.y + 1));
+            }
+        }
+        if (pos2.y > 0) {
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up)) {
+                p2.setPosition(sf::Vector2f(pos2.x, pos2.y - 1));
+            }
+        }
+        if (pos2.y < winy-py) {
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down)) {
+                p2.setPosition(sf::Vector2f(pos2.x, pos2.y + 1));
+            }
+        }
 
         //move ball
         auto pos = ball.getPosition();
