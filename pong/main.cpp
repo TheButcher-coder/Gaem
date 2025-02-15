@@ -43,7 +43,7 @@ void pong() {
 
     //init random
     srand(time(NULL));
-    Pos v_ball(0, 1);   //initial speed of ball
+    Pos v_ball(1, 1);   //initial speed of ball
     sf::RenderWindow win(sf::VideoMode({static_cast<unsigned>(winx), static_cast<unsigned>(winy)}), "Pong");
 
     sf::RectangleShape p1(sf::Vector2f(px, py));   //Player 1
@@ -99,10 +99,12 @@ void pong() {
         if (pos.x + r > winx) {
             std::cout << "+1 for Player 1!" << std::endl;
             scorep1++;
+            ball.setPosition(sf::Vector2f(winx/2, winy/2));
         }
         else if (pos.x + r < 0) {
             std::cout << "+1 for Player 2!" << std::endl;
             scorep2++;
+            ball.setPosition(sf::Vector2f(winx/2, winy/2));
         }
 
         if (p1.getGlobalBounds().findIntersection(ball.getGlobalBounds()).has_value() || p2.getGlobalBounds().findIntersection(ball.getGlobalBounds())) v_ball.set_x(-v_ball.get_x());
