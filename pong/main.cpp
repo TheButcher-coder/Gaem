@@ -33,14 +33,15 @@ int get_millisec() {
 void pong() {
     //Init all stuff thats needed
     int r = 10;
+
     sf::RenderWindow win(sf::VideoMode({800, 400}), "Pong");
 
-    sf::RectangleShape p1(sf::Vector2f(100, 20));   //Player 1
-    sf::RectangleShape p2(sf::Vector2f(100, 20));   //Player 2
+    sf::RectangleShape p1(sf::Vector2f(20, 100));   //Player 1
+    sf::RectangleShape p2(sf::Vector2f(20, 100));   //Player 2
     sf::CircleShape ball(static_cast<float>(r));    //Ball
 
     p1.setPosition(sf::Vector2f(10, 10));
-    p2.setPosition(sf::Vector2f(390, 10));
+    p2.setPosition(sf::Vector2f(770, 290));
     ball.setPosition(sf::Vector2f(400, 200));
 
     //Basic window stuff
@@ -48,6 +49,8 @@ void pong() {
         //TEST
         win.clear(sf::Color::Black);
         win.draw(ball);
+        win.draw(p1);
+        win.draw(p2);
         if (win.pollEvent()->getIf<sf::Event::Closed>()) win.close();   //close window if close button pressed
         win.display();
     }
