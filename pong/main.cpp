@@ -1,5 +1,9 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
+#include <time.h>
+#include <chrono>
+#include <stdlib.h>
+
 #include "pos.h"
 
 int get_sec() {
@@ -33,13 +37,19 @@ int get_millisec() {
 void pong() {
     //Init all stuff thats needed
     int r = 10;
+    int winx=800, winy=400;
+    int px=20, py=100;
 
-    sf::RenderWindow win(sf::VideoMode({800, 400}), "Pong");
+    //init random
+    srand(time(NULL));
+    Pos v_ball((rand()%100)/100, (rand()%100)/100);   //initial speed of ball
+    sf::RenderWindow win(sf::VideoMode({static_cast<unsigned>(winx), static_cast<unsigned>(winy)}), "Pong");
 
-    sf::RectangleShape p1(sf::Vector2f(20, 100));   //Player 1
-    sf::RectangleShape p2(sf::Vector2f(20, 100));   //Player 2
+    sf::RectangleShape p1(sf::Vector2f(px, py));   //Player 1
+    sf::RectangleShape p2(sf::Vector2f(px, py));   //Player 2
     sf::CircleShape ball(static_cast<float>(r));    //Ball
 
+    //start positions
     p1.setPosition(sf::Vector2f(10, 10));
     p2.setPosition(sf::Vector2f(770, 290));
     ball.setPosition(sf::Vector2f(400, 200));
@@ -52,20 +62,26 @@ void pong() {
         //Keylistener shit
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W)) {
             auto pos = p1.getPosition();
-            p1.setPosition(sf::Vector2f(pos.x, pos.y - 1));
+            if (pos.y > 0 || pos.y < winx - px) p1.setPosition(sf::Vector2f(pos.x, pos.y - 1));
+
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)) {
             auto pos = p1.getPosition();
-            p1.setPosition(sf::Vector2f(pos.x, pos.y + 1));
+            if (pos.y > 0 || pos.y < winx - px) p1.setPosition(sf::Vector2f(pos.x, pos.y + 1));
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up)) {
             auto pos = p2.getPosition();
-            p2.setPosition(sf::Vector2f(pos.x, pos.y - 1));
+            if (pos.y > 0 || pos.y < winx - px) p2.setPosition(sf::Vector2f(pos.x, pos.y - 1));
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down)) {
             auto pos = p2.getPosition();
-            p2.setPosition(sf::Vector2f(pos.x, pos.y + 1));
+            if (pos.y > 0 || pos.y < winx - px) p2.setPosition(sf::Vector2f(pos.x, pos.y + 1));
         }
+
+        //move ball
+        auto pos = ball.getPosition();
+        ball.setPosition(sf::Vector2f(pos.x + v_ball.get_x(), pos.y + v_ball.get_y()));
+
         win.draw(ball);
         win.draw(p1);
         win.draw(p2);
