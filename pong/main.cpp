@@ -62,14 +62,14 @@ void pong() {
         //Keylistener shit
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W)) {
             auto pos = p1.getPosition();
-            if (pos.y - 5 >= 0 && pos.y <= winy - py - 1) p1.setPosition(sf::Vector2f(pos.x, pos.y - 1));
+            if (pos.y - 5 >= 0 && pos.y <= winy - py - 5) p1.setPosition(sf::Vector2f(pos.x, pos.y - 1));
             else {
                 p1.setPosition(sf::Vector2f(pos.x, pos.y + 1));
             }
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)) {
             auto pos = p1.getPosition();
-            if (pos.y - 5 >= 0 && pos.y <= winy - py - 1) p1.setPosition(sf::Vector2f(pos.x, pos.y + 1));
+            if (pos.y - 5 >= 0 && pos.y <= winy - py - 5) p1.setPosition(sf::Vector2f(pos.x, pos.y + 1));
             else {
                 p1.setPosition(sf::Vector2f(pos.x, pos.y - 1));
             }
