@@ -40,6 +40,7 @@ void pong() {
     int r = 10, scorep1=0, scorep2=0;
     int winx=800, winy=400;
     int px=20, py=100;
+    double dphi=1;      //spin
 
     //init random
     srand(time(NULL));
@@ -87,8 +88,6 @@ void pong() {
 
         //move ball
         auto pos = ball.getPosition();
-        Pos t = pos;
-        t.print();
         int ballmult=1;
 
         //Check y bounds
@@ -115,7 +114,7 @@ void pong() {
         win.draw(p2);
         if (win.pollEvent()->getIf<sf::Event::Closed>()) win.close();   //close window if close button pressed
         win.display();
-        std::this_thread::sleep_for(std::chrono::milliseconds(3));     //tweak für andere geschwindigkeiten
+        std::this_thread::sleep_for(std::chrono::milliseconds(2));     //tweak für andere geschwindigkeiten
     }
     std::cout << "Player1: " << scorep1 << " POINTS!!" << std::endl << "Player2: " << scorep2 << " POINTS!!" << std::endl;
 }
