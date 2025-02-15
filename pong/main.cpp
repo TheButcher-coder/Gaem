@@ -77,6 +77,7 @@ void pong() {
             if (pos.y > 0 && pos.y < winx - px) p2.setPosition(sf::Vector2f(pos.x, pos.y + 1));
         }
 
+        //aAAAAAA
         //move ball
         auto pos = ball.getPosition();
         ball.setPosition(sf::Vector2f(pos.x + v_ball.get_x(), pos.y + v_ball.get_y()));
