@@ -11,7 +11,4 @@ class Game {
 
     int numPlayers;
 };
-
-
-
 #endif //GAME_H
