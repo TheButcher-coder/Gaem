@@ -10,7 +10,11 @@
 class Card {
 private:
   int val;
+
 public:
+  Card();
+  Card(int val_in);
+
   int get_val() const;
   void set_val(int val);
 };
