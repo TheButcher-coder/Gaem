@@ -8,7 +8,11 @@
 
 
 class Card {
-
+private:
+  int val;
+public:
+  int get_val() const;
+  void set_val(int val);
 };
 
 
