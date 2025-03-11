@@ -8,7 +8,11 @@
 
 
 class Field {
+    Field();
+    ~Field() {};
 
+    void printField();
+    void update();
 };
 
 

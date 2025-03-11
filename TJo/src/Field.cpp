@@ -3,3 +3,15 @@
 //
 
 #include "Field.h"
+
+Field::Field() {
+
+}
+
+void Field::printField() {
+    
+}
+
+void Field::update() {
+
+}
