@@ -37,6 +37,7 @@ int get_millisec() {
 
 void pong() {
     //Init all stuff thats needed
+    double t, t0=get_millisec()/1000;
     int r = 10, scorep1=0, scorep2=0;
     int winx=800, winy=400;
     int px=20, py=100;
@@ -59,6 +60,7 @@ void pong() {
     //Basic window stuff
     while (win.isOpen()) {
         //TEST
+        t = t0 - get_millisec()/1000;
         win.clear(sf::Color::Black);
 
         //Keylistener shit
@@ -107,14 +109,14 @@ void pong() {
         }
         else {
             if (p1.getGlobalBounds().findIntersection(ball.getGlobalBounds()).has_value() || p2.getGlobalBounds().findIntersection(ball.getGlobalBounds())) v_ball.set_x(-v_ball.get_x());
-            ball.setPosition(sf::Vector2f(pos.x + v_ball.get_x()/ballmult, pos.y + v_ball.get_y()/ ballmult));
+            ball.setPosition(sf::Vector2f(pos.x + v_ball.get_x()/ballmult, pos.y + v_ball.get_y()/ballmult));
         }
         win.draw(ball);
         win.draw(p1);
         win.draw(p2);
         if (win.pollEvent()->getIf<sf::Event::Closed>()) win.close();   //close window if close button pressed
         win.display();
-        std::this_thread::sleep_for(std::chrono::milliseconds(2));     //tweak für andere geschwindigkeiten
+        //std::this_thread::sleep_for(std::chrono::milliseconds(2));     //tweak für andere geschwindigkeiten
     }
     std::cout << "Player1: " << scorep1 << " POINTS!!" << std::endl << "Player2: " << scorep2 << " POINTS!!" << std::endl;
 }
