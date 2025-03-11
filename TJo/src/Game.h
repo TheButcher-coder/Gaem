@@ -9,7 +9,7 @@ class Game {
         return numPlayers;
     }
 
-    int numPlayers
+    int numPlayers;
 };
 
 
