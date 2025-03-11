@@ -12,6 +12,14 @@ Card::Card(int val_in) {
     val = val_in;
 }
 
+bool Card::get_is_blank() {
+    return is_blank;
+}
+
+void Card::set_blank(bool v) {
+    is_blank = v;
+}
+
 int Card::get_val() const {
     return val;
 }
