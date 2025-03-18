@@ -5,9 +5,17 @@
 #ifndef FIELD_H
 #define FIELD_H
 
+#include "Card.h"
+#include <vector>
+
+
+using namespace std;
 
 
 class Field {
+private:
+    vector<vector<Card> > cards;
+public:
     Field();
     ~Field() {};
 
