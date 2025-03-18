@@ -8,19 +8,7 @@
 
 
 class Card {
-private:
-  int val;
-  bool is_blank;
 
-public:
-  Card();     //Constructors
-  Card(int val_in);
-
-  bool get_is_blank();  //getters/setters
-  void set_blank( bool v);
-
-  int get_val() const;
-  void set_val(int val);
 };
 
 
