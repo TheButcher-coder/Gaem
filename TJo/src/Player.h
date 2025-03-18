@@ -8,7 +8,7 @@ class Player {
     Player();
     ~Player() {};
 
-    void drawCard();
+    Card drawCard();
     void playCard();
 
 

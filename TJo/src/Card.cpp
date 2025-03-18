@@ -3,10 +3,12 @@
 //
 
 #include "Card.h"
+#include "Card_shuffler.h"
 
 
 Card::Card() {
-    val = 0;
+    // hier schauen das karte gezogen und zugeordnet wird
+    // val = draw_card();
 }
 
 Card::Card(int val_in) {

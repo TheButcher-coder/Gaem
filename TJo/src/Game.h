@@ -8,8 +8,6 @@ class Game {
     int getNumPlayers() {
         return numPlayers;
     }
-    //AAAAAHHHHH
-    int fuck;
     int numPlayers;
 };
 #endif //GAME_H
