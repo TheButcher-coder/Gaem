@@ -13,7 +13,7 @@ Player::Player() {
     }
     // 2 karten aufdecken
     for (int i=0; i<2; i++) {
-        pos pos = getPos();
+        //pos pos = getPos();
         // Card.reveal(pos.x, pos.y); oder so
     }
 }

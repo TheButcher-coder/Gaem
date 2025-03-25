@@ -18,7 +18,20 @@ Field::Field(shared_ptr<Card_shuffler> cs) {
 
 void Field::printField() {
 //print field
-    //FFS mag niiiiicht XD
+    //cout << "";
+
+    for (auto row: cards) {
+        for (auto card : row) {
+            if (card.is_revealed()) cout << card.get_val() << " | ";
+            else cout << " " << " | ";
+        }
+
+        cout << endl;
+        for (int i = 0; i < 16; i++) {
+            cout << "-";
+        }
+        cout << endl;
+    }
 }
 
 void Field::update() {

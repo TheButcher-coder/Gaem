@@ -3,15 +3,14 @@
 
 #include "src/Card.h"
 #include "src/Card_shuffler.h"
+#include "src/Field.h"
 //Du Figgo
 
 using namespace std;
 
 
 int main() {
-    Card_shuffler cs;
-    for (int i = 0; i < 20; i++) {
-        Card temp = cs.draw_card();
-        cout << temp.get_val() << endl;
-    }
+    shared_ptr<Card_shuffler> cs = make_shared<Card_shuffler>();
+    Field test(cs);
+    test.printField();
 }
