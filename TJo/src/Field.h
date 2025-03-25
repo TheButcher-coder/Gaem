@@ -16,15 +16,15 @@ using namespace std;
 
 class Field {
 private:
-    vector<vector<shared_ptr<Card>> > cards;
+    vector<vector<Card>> cards;
     //shared_ptr<Card_shuffler> cs;    //enthält DEN Card shuffler Es kann nur einen geben, sonst ist die verteilung schlecht
 public:
-    Field(shared_ptr<Card_shuffler>);
+    Field(Card_shuffler);
     ~Field() {};
 
     void printField();
-    shared_ptr<Card> get_card(int i, char j);
-    void set_card(shared_ptr<Card> in);
+    Card get_card(int i, char j);
+    void set_card(Card in);
     void update();
 };
 

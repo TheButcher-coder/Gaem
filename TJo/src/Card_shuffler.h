@@ -5,7 +5,7 @@
 #ifndef CRAD_SHUFFLER_H
 #define CRAD_SHUFFLER_H
 #include <vector>
-
+#include "Card.h"
 
 class Card_shuffler {
 private:
@@ -13,7 +13,8 @@ private:
 
 public:
     Card_shuffler();
-    int draw_card();    //returns Value of drawn Card
+    void reshuffle();
+    Card draw_card();    //returns Value of drawn Card
 };
 
 
