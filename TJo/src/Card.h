@@ -11,6 +11,7 @@ class Card {
 private:
   int val;
   bool is_blank;
+  bool revealed=false;
 
 public:
   Card();     //Constructors
@@ -21,6 +22,10 @@ public:
 
   int get_val() const;
   void set_val(int val);
+
+  bool is_revealed();
+  void reveal();
+
 };
 
 

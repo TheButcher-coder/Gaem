@@ -30,3 +30,12 @@ int Card::get_val() const {
 void Card::set_val(int val) {
     this->val = val;
 }
+
+bool Card::is_revealed() {
+    return revealed;
+}
+
+void Card::reveal() {
+    revealed = true;
+}
+
