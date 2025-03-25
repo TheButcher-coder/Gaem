@@ -4,6 +4,7 @@
 
 #include "Card_shuffler.h"
 #include <cstdlib>
+#include <random>
 
 Card_shuffler::Card_shuffler() {
     //init full stack with standart cards and amounts
@@ -13,10 +14,14 @@ Card_shuffler::Card_shuffler() {
 
 Card Card_shuffler::draw_card() {
     //there's cards between 12-> -2 including 0
+    std::random_device dev;
+    std::mt19937 rng(dev());
+    std::uniform_int_distribution<std::mt19937::result_type> dist6(0,14); // distribution in range [1, 6]
+
     int r_num;
 
     do {    //Find a card thats left in the stack
-        r_num = rand()%14;
+        r_num = static_cast<int>(dist6(rng));
     } while (n_cards[r_num][1] <= 0);
 
     n_cards[r_num][1]--;
