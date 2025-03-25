@@ -15,6 +15,7 @@ public:
     Card_shuffler();
     void reshuffle();
     Card draw_card();    //returns Value of drawn Card
+    bool is_empty();
 };
 
 

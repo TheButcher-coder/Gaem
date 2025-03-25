@@ -27,3 +27,11 @@ Card Card_shuffler::draw_card() {
     n_cards[r_num][1]--;
     return Card{r_num - 2};
 }
+
+bool Card_shuffler::is_empty() {
+    int num_cards=0;
+    for (auto & n_card : n_cards) {
+        num_cards += n_card[1];     //should work
+    }
+    return num_cards == 0;
+}

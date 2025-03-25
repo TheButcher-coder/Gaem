@@ -17,7 +17,7 @@ using namespace std;
 class Field {
 private:
     vector<vector<Card>> cards;
-    shared_ptr<Card_shuffler> cs;    //enthält DEN Card shuffler Es kann nur einen geben, sonst ist die verteilung schlecht
+    //shared_ptr<Card_shuffler> cs;    //enthält DEN Card shuffler Es kann nur einen geben, sonst ist die verteilung schlecht
 public:
     Field(shared_ptr<Card_shuffler>);
     ~Field() {};
