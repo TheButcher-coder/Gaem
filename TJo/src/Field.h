@@ -10,6 +10,7 @@
 #include <vector>
 #include <memory>
 #include <iostream>
+#include "Pos.h"
 
 using namespace std;
 
@@ -26,6 +27,7 @@ public:
     Card get_card(int i, char j);
     void set_card(Card in);
     void update();
+    void reveal_card(Pos p);
 };
 
 

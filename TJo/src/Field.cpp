@@ -19,11 +19,14 @@ Field::Field(shared_ptr<Card_shuffler> cs) {
 void Field::printField() {
 //print field
     //cout << "";
-
+    for (int i = 0; i < 16; i++) {
+        cout << "-";
+    }
+    cout << endl;
     for (auto row: cards) {
         for (auto card : row) {
             if (card.is_revealed()) cout << card.get_val() << " | ";
-            else cout << " " << " | ";
+            else cout << "?" << " | ";
         }
 
         cout << endl;
@@ -36,4 +39,8 @@ void Field::printField() {
 
 void Field::update() {
 //uuhhhhh
+}
+
+void Field::reveal_card(Pos p) {
+    cards[p.getX()][p.getY()].reveal();
 }
