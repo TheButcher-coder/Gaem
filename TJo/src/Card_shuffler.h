@@ -5,12 +5,14 @@
 #ifndef CRAD_SHUFFLER_H
 #define CRAD_SHUFFLER_H
 #include <vector>
+#include <map>
 #include "Card.h"
 
 class Card_shuffler {
 private:
+    //EEEEW CHANGE TO MAP FFS
     std::vector<std::vector<int>> n_cards;  //contains the value in the first row and the number of card in the second row.
-
+    std::map<int, int> cards;
 public:
     Card_shuffler();
     void reshuffle();
