@@ -4,7 +4,8 @@
 
 #include "Field.h"
 
-Field::Field(shared_ptr<Card_shuffler> cs) {
+Field::Field(shared_ptr<Card_shuffler> cs_in) {
+    cs = cs_in;
     //init playing field by drawing random cards
     //Global card shuffler required
   cards = vector<vector<Card>>(3, vector<Card>(4));
@@ -16,7 +17,7 @@ Field::Field(shared_ptr<Card_shuffler> cs) {
     }
 }
 
-void Field::printField() {
+void Field::print() {
 //print field
     //cout << "";
     for (int i = 0; i < 16; i++) {

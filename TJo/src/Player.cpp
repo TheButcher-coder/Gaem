@@ -2,8 +2,9 @@
 
 #include "Player.h"
 #include "Card.h"
-
+/*
 Player::Player() {
+
     hand = std::vector<std::vector<Card>>(4, std::vector<Card>(3));
     for (int i=0; i<4; i++) {
         for (int j=0; j<3; j++) {
@@ -16,10 +17,18 @@ Player::Player() {
         //pos pos = getPos();
         // Card.reveal(pos.x, pos.y); oder so
     }
+
+}
+*/
+
+Player::Player( std::shared_ptr<Card_shuffler> &cs_in): field(cs_in) {
+    cs = cs_in;
+    field = Field(cs);
 }
 
+
 Card Player::drawCard() {
-    // hier shuffler methode aufrufen 
+    return cs->draw_card();
 }
 
 void Player::playCard() {
@@ -29,20 +38,26 @@ void Player::playCard() {
     // je nachdem karte auf ablagestapel
 }
 
+/*
 struct pos {
     int x;
     int y;
 };
+*/
 
-pos getPos() {
-    pos position = {0, 0};
+Pos getPos() {
+    Pos p = {0, 0};
     std::string input;
 
     std::cout << "karten koordinaten?: ";
     std::cin >> input;
 
-    position.x = input[0] - 'a';
-    position.y = input[1] - '1';
+    p.setX(input[0] - 'a');
+    p.setY(input[1] - '1');
     
-    return position;
+    return p;
+}
+
+void Player::print_field() {
+    field.print();
 }
