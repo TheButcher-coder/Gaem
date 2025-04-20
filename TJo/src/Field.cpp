@@ -4,7 +4,8 @@
 
 #include "Field.h"
 
-Field::Field(shared_ptr<Card_shuffler> cs) {
+Field::Field(shared_ptr<Card_shuffler> cs_in) {
+    cs = cs_in;
     //init playing field by drawing random cards
     //Global card shuffler required
   cards = vector<vector<Card>>(3, vector<Card>(4));
@@ -16,11 +17,31 @@ Field::Field(shared_ptr<Card_shuffler> cs) {
     }
 }
 
-void Field::printField() {
+void Field::print() {
 //print field
-    //FFS mag niiiiicht XD
+    //cout << "";
+    for (int i = 0; i < 16; i++) {
+        cout << "-";
+    }
+    cout << endl;
+    for (auto row: cards) {
+        for (auto card : row) {
+            if (card.is_revealed()) cout << card.get_val() << " | ";
+            else cout << "?" << " | ";
+        }
+
+        cout << endl;
+        for (int i = 0; i < 16; i++) {
+            cout << "-";
+        }
+        cout << endl;
+    }
 }
 
 void Field::update() {
 //uuhhhhh
+}
+
+void Field::reveal_card(Pos p) {
+    cards[p.getX()][p.getY()].reveal();
 }

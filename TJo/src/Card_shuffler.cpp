@@ -9,29 +9,30 @@
 Card_shuffler::Card_shuffler() {
     //init full stack with standart cards and amounts
     //Custom numbers could be added
-    n_cards = std::vector<std::vector<int>>({{-2, 5}, {-1, 10}, {0, 15}, {1, 10}, {2, 10}, {3, 10}, {4, 10}, {5, 10}, {6, 10}, {7, 10}, {8, 10}, {9, 10}, {10, 10}, {11, 10}, {12, 10}});
+    //rewrite this expression so that it works with a map with the card value as key and number of cards as Value
+    cards = std::map<int, int>({{-2, 5}, {-1, 10}, {0, 15}, {1, 10}, {2, 10}, {3, 10}, {4, 10}, {5, 10}, {6, 10}, {7, 10}, {8, 10}, {9, 10}, {10, 10}, {11, 10}, {12, 10}});
 }
 
 Card Card_shuffler::draw_card() {
     //there's cards between 12-> -2 including 0
     std::random_device dev;
     std::mt19937 rng(dev());
-    std::uniform_int_distribution<std::mt19937::result_type> dist6(0,14); // distribution in range [1, 6]
+    std::uniform_int_distribution<std::mt19937::result_type> dist6(0,14); // distribution in range [0, 14]
 
     int r_num;
 
     do {    //Find a card thats left in the stack
-        r_num = static_cast<int>(dist6(rng));
-    } while (n_cards[r_num][1] <= 0);
+        r_num = static_cast<int>(dist6(rng)) - 2;
+    } while (cards[r_num] <= 0);
 
-    n_cards[r_num][1]--;
-    return Card{r_num - 2};
+    cards[r_num] -= 1;
+    return Card{r_num};
 }
 
 bool Card_shuffler::is_empty() {
     int num_cards=0;
-    for (auto & n_card : n_cards) {
-        num_cards += n_card[1];     //should work
+    for (auto &[card_val, card_cnt] : cards) {
+        num_cards += card_cnt;     //should work
     }
     return num_cards == 0;
 }
