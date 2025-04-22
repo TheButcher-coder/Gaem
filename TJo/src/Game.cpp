@@ -5,18 +5,22 @@
 
 Game::Game(std::shared_ptr<Card_shuffler> cs_in, int n_players) {
     cs = cs_in;
+    this->n_players = n_players;
 
     for (int i = 0; i < n_players; i++) {
         //players.push_back(Player(cs));
         players.emplace(cs);        //Geil emplace > push
+        scores.push_back(vector<int>({}));
     }
 }
 
 Game::Game(int n_players) {
     cs = make_shared<Card_shuffler>();
+    this->n_players = n_players;
 
     for (int i = 0; i < n_players; i++) {
         players.emplace(cs);
+        scores.push_back(vector<int>({}));
     }
 }
 
@@ -49,11 +53,7 @@ void Game::print_scores() {
 }
 
 int Game::getNumPlayers() {
-    int n=0;
-    for (auto &player: scores) {
-        n++;
-    }
-    return n;
+    return n_players;
 }
 
 void Game::play() {
@@ -72,10 +72,11 @@ void Game::play() {
      */
 
     //Start by allowing each player to show 2 Cards
+    //WORKS
     int n = getNumPlayers();
     for (int i = 0; i < n; i++) {
         Pos p1, p2;
-        bool flag=0;    //flag if its the first time asking for Card 2
+        bool flag=false;    //flag if its the first time asking for Card 2
 
         p1 = Pos();
         p2 = Pos();
@@ -97,29 +98,37 @@ void Game::play() {
 
     //Normal round
     used_stack us = used_stack();
+    us.deposit(cs->draw_card());        //top Card is first in us
     bool is_last_round=false;
     do {
-            char in;
-            do {
-                cout << "Draw card from draw pile(A) or discareded pile(B): " << endl;
-                cin >> in;
-            } while (in != 'A' || in != 'a' || in != 'B' || in != 'b');
+        char in;
+        do {
+            cout << "Draw card from draw pile(A) or discareded pile(B): " << endl;
+            cin >> in;
+        } while (in != 'A' && in != 'a' && in != 'B' && in != 'b');
 
-            if (in == 'A' || in == 'a') {
-                Pos p;
-                cout << "Which card should be swapped?" << endl;
-                p.ui_getPos();
-                us.deposit(player.swapCard(p));
-            }
-            else {
-                Pos p;
-                cout << "Which card should be swapped?" << endl;
-                p.ui_getPos();
-                player.swapDiscardedCard(p);
-            }
-            //Check if column haS 3 cards of the same value
-            //Check if player finished the game
+        cout << "discard pile: " << us.get_top() << endl;
+        if (in == 'A' || in == 'a') {
+            Pos p;
+            cout << "Which card should be swapped?" << endl;
+            p.ui_getPos();
+            us.deposit(players.front().swapCard(p));
+        }
+        else {
+            Pos p;
+            cout << "Which card should be swapped?" << endl;
+            p.ui_getPos();
+            players.front().swapDiscardedCard(p);
+        }
+        players.front().print_field();
+        //Check if column haS 3 cards of the same value
+        //Check if player finished the game
+        is_last_round = players.front().all_cards_uncovered();
 
-    } while (!is_last_round());
+        Player temp = players.front();
+        players.push(temp);
+        players.pop();
+
+    } while (!is_last_round);
 }
 

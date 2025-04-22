@@ -1,6 +1,8 @@
 #include <iostream>
 #include <vector>
 #include <map>
+#include <stdlib.h>
+
 #include "src/Card.h"
 #include "src/Card_shuffler.h"
 #include "src/Field.h"
@@ -10,9 +12,6 @@
 using namespace std;
 
 
-void test(shared_ptr<int> test) {
-    *test = 0;
-}
 int main() {
     //Greeting
     int n_players;
@@ -20,9 +19,6 @@ int main() {
     cout << "How many players are playing?" << endl;
     cin >> n_players;
     Game g(n_players);
-    //g.play();
+    g.play();
 
-    int var = 12;
-    test(std::make_shared<int>(var));
-    cout << test << endl;
 }

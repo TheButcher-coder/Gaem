@@ -24,9 +24,23 @@ void Field::print() {
         cout << "-";
     }
     cout << endl;
-    for (auto row: cards) {
-        for (auto card : row) {
-            if (card.is_revealed()) cout << card.get_val() << " | ";
+    for (auto &row: cards) {
+        for (auto &card : row) {
+            if (card.is_revealed()) {
+                int val = card.get_val();
+
+                if (val <= 5)
+                    cout << "\033[32m";  // grün
+                else if (val <= 9)
+                    cout << "\033[33m";  // gelb
+                else
+                    cout << "\033[31m";  // rot
+
+                cout << val;
+
+                cout << "\033[0m";  // Farbe zurücksetzen
+                cout << " | ";
+            }
             else cout << "?" << " | ";
         }
 
@@ -49,4 +63,15 @@ Card Field::get_card(Pos &p) {
 void Field::set_card(Card in, Pos p) {
     in.reveal();
     cards[p.getX()][p.getY()] = in;
+}
+
+bool Field::all_cards_uncovered() {
+    bool ret = true;
+
+    for (auto &column: cards) {
+        for (auto &card: column) {
+            if (!card.is_revealed()) ret = false;
+        }
+    }
+    return ret;
 }

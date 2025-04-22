@@ -78,3 +78,7 @@ Card Player::swapDiscardedCard(Pos p) {
 
     return old;
 }
+
+bool Player::all_cards_uncovered() {
+    return field.all_cards_uncovered();
+}

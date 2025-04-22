@@ -10,6 +10,7 @@
 #include <vector>
 #include <memory>
 #include <iostream>
+#include <stdlib.h>     //output colors
 #include "Pos.h"
 
 using namespace std;
@@ -26,8 +27,9 @@ public:
     void print();
     Card get_card(Pos &p);
     void set_card(Card in, Pos p);
-    void update();
+    //void update();
     void reveal_card(Pos &p);
+    bool all_cards_uncovered();
 };
 
 
