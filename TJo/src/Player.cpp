@@ -27,8 +27,13 @@ Player::Player( std::shared_ptr<Card_shuffler> &cs_in): field(cs_in) {
 }
 
 
-Card Player::drawCard() {
-    return cs->draw_card();
+Card Player::swapCard(Pos p) {
+    Card temp =  cs->draw_card();
+    Card old = field.get_card(p);
+
+    field.set_card(temp, p);
+
+    return old;
 }
 
 void Player::playCard() {
@@ -60,4 +65,16 @@ Pos getPos() {
 
 void Player::print_field() {
     field.print();
+}
+
+void Player::revealCard(Pos &p) {
+    field.reveal_card(p);
+}
+
+Card Player::swapDiscardedCard(Pos p) {
+    Card old = field.get_card(p);
+
+    field.set_card(us->take_top(), p);
+
+    return old;
 }

@@ -17,6 +17,11 @@ public:
   // Setters
   void setX(int inx);
   void setY(int iny);
+
+  //UI
+  void ui_getPos();
+
+  bool operator==(const Pos &p) const;
 };
 
 #endif // POS_H

@@ -5,19 +5,23 @@
 #include "Card.h"
 #include "Card_shuffler.h"
 #include "Field.h"
+#include "used_stack.h"
 
 class Player {
 private:
     Field field;
     std::shared_ptr<Card_shuffler> cs;
+    std::shared_ptr<used_stack> us;
 
 public:
     //Player();
     Player(std::shared_ptr<Card_shuffler> &cs_in);
     ~Player()=default;
 
-    Card drawCard();
+    Card swapCard(Pos p);
+    Card swapDiscardedCard(Pos p);
     void playCard();
+    void revealCard(Pos &p);
 
     void print_field();
     

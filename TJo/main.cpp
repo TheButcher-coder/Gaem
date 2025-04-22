@@ -10,20 +10,19 @@
 using namespace std;
 
 
+void test(shared_ptr<int> test) {
+    *test = 0;
+}
 int main() {
-    shared_ptr<Card_shuffler> cs = make_shared<Card_shuffler>();
-    Field test(cs);
-    Field t2(cs);
+    //Greeting
+    int n_players;
+    cout << "Welcome to TJo. A terminal based Skyjo implementation!" << endl;
+    cout << "How many players are playing?" << endl;
+    cin >> n_players;
+    Game g(n_players);
+    //g.play();
 
-    //test.print();
-    //t2.print();
-
-    //new test:
-    Game g(4);
-    g.print_fields();
-
-
-    Player p1(cs);
-
-    p1.print_field();
+    int var = 12;
+    test(std::make_shared<int>(var));
+    cout << test << endl;
 }

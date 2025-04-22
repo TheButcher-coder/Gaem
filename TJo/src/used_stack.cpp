@@ -14,12 +14,15 @@ int used_stack::get_top() {
     return history.at(history.back());
 }
 
-void used_stack::take_top() {
+Card used_stack::take_top() {
     auto back = history.back();
     int val = history.at(back);
+    Card temp = Card(history.at(history.back()));
 
     history.pop_back();
     cards[val] -= 1;
+
+    return temp;
 }
 
 void used_stack::deposit(int val) {
@@ -27,4 +30,7 @@ void used_stack::deposit(int val) {
     cards[val] += 1;
 }
 
-
+void used_stack::deposit(Card c) {
+    int val = c.get_val();
+    deposit(val);
+}

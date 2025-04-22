@@ -24,10 +24,10 @@ public:
     ~Field() = default;
 
     void print();
-    Card get_card(int i, char j);
-    void set_card(Card in);
+    Card get_card(Pos &p);
+    void set_card(Card in, Pos p);
     void update();
-    void reveal_card(Pos p);
+    void reveal_card(Pos &p);
 };
 
 

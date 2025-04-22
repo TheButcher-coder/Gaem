@@ -38,10 +38,15 @@ void Field::print() {
     }
 }
 
-void Field::update() {
-//uuhhhhh
+void Field::reveal_card(Pos &p) {
+    cards[p.getX()][p.getY()].reveal();
 }
 
-void Field::reveal_card(Pos p) {
-    cards[p.getX()][p.getY()].reveal();
+Card Field::get_card(Pos &p) {
+    return cards[p.getX()][p.getY()];
+}
+
+void Field::set_card(Card in, Pos p) {
+    in.reveal();
+    cards[p.getX()][p.getY()] = in;
 }

@@ -19,13 +19,10 @@ public:
     used_stack();
 
     int get_top();
-    void take_top();        //or Card take_top()?
+    Card take_top();        //or Card take_top()?
 
     void deposit(int val);
-
-
-
-
+    void deposit(Card c);
 };
 
 
