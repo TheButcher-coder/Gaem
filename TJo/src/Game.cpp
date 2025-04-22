@@ -94,6 +94,9 @@ void Game::play() {
             players.front().print_field();
             flag = !flag;
         } while (p1 == p2);
+
+        players.push(players.front());
+        players.pop();
     }
 
     //Normal round
