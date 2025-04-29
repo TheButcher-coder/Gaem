@@ -12,6 +12,8 @@ Game::Game(std::shared_ptr<Card_shuffler> cs_in, int n_players) {
         players.emplace(cs);        //Geil emplace > push
         scores.push_back(vector<int>({}));
     }
+    us = make_shared<used_stack>();
+    us->deposit(cs->draw_card());
 }
 
 Game::Game(int n_players) {
@@ -100,8 +102,8 @@ void Game::play() {
     }
 
     //Normal round
-    used_stack us = used_stack();
-    us.deposit(cs->draw_card());        //top Card is first in us
+
+    //us->deposit(cs->draw_card());        //top Card is first in us
     bool is_last_round=false;
     do {
         char in;
@@ -110,12 +112,12 @@ void Game::play() {
             cin >> in;
         } while (in != 'A' && in != 'a' && in != 'B' && in != 'b');
 
-        cout << "discard pile: " << us.get_top() << endl;
+        cout << "discard pile: " << us->get_top() << endl;
         if (in == 'A' || in == 'a') {
             Pos p;
             cout << "Which card should be swapped?" << endl;
             p.ui_getPos();
-            us.deposit(players.front().swapCard(p));
+            us->deposit(players.front().swapCard(p));
         }
         else {
             Pos p;
