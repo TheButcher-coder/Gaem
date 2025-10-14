@@ -103,6 +103,7 @@ void Game::play() {
     }
 
     //Normal round
+
     cout << "GIGI" << endl;
     us->deposit(cs->draw_card().get_val());        //WHYNOTWORK?//top Card is first in us
     bool is_last_round=false;
