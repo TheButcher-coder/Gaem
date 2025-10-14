@@ -1,8 +1,8 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
-#include <time.h>
+#include <ctime>
 #include <chrono>
-#include <stdlib.h>
+#include <cstdlib>
 #include <thread>
 
 #include "pos.h"
@@ -47,7 +47,7 @@ void pong() {
     srand(time(NULL));
     Pos v_ball(1, 1);   //initial speed of ball
     sf::RenderWindow win(sf::VideoMode({static_cast<unsigned>(winx), static_cast<unsigned>(winy)}), "Pong");
-
+    win.setVerticalSyncEnabled(true);
     sf::RectangleShape p1(sf::Vector2f(px, py));   //Player 1
     sf::RectangleShape p2(sf::Vector2f(px, py));   //Player 2
     sf::CircleShape ball(static_cast<float>(r));    //Ball

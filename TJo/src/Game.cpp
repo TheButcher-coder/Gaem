@@ -18,6 +18,7 @@ Game::Game(std::shared_ptr<Card_shuffler> cs_in, int n_players) {
 
 Game::Game(int n_players) {
     cs = make_shared<Card_shuffler>();
+    us = make_shared<used_stack>();
     this->n_players = n_players;
 
     for (int i = 0; i < n_players; i++) {
@@ -102,13 +103,13 @@ void Game::play() {
     }
 
     //Normal round
-
-    //us->deposit(cs->draw_card());        //top Card is first in us
+    cout << "GIGI" << endl;
+    us->deposit(cs->draw_card().get_val());        //WHYNOTWORK?//top Card is first in us
     bool is_last_round=false;
     do {
         char in;
         do {
-            cout << "Draw card from draw pile(A) or discareded pile(B): " << endl;
+            cout << "Draw card from draw pile(A) or discarded pile(B): " << endl;
             cin >> in;
         } while (in != 'A' && in != 'a' && in != 'B' && in != 'b');
 

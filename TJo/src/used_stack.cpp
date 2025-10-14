@@ -11,13 +11,12 @@ used_stack::used_stack() {
 }
 
 int used_stack::get_top() {
-    return history.at(history.back());
+    return history.back();
 }
 
 Card used_stack::take_top() {
-    auto back = history.back();
-    int val = history.at(back);
-    Card temp = Card(history.at(history.back()));
+    auto val = history.back();
+    Card temp = Card(val);
 
     history.pop_back();
     cards[val] -= 1;
