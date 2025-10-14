@@ -38,6 +38,12 @@ Card Player::swapCard(Pos p) {
     return old;
 }
 
+Card Player::swapCard(Card &c, Pos &p) {
+    Card old = field.get_card(p);
+
+    field.set_card(c, p);
+    return old;
+}
 void Player::playCard() {
     // drawCard aufrufen
     // karte ablegen und eigene aufdecken

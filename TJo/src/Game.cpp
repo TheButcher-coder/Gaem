@@ -119,14 +119,18 @@ void Game::play() {
         if (in == 'A' || in == 'a') {
             Pos p;
             cout << "Which card should be swapped?" << endl;
+            Card temp = cs->draw_card();
+            cout << "Drawn Card: " << temp.get_val() << endl;
+
             p.ui_getPos();
-            us->deposit(players.front().swapCard(p));
+
+            us->deposit(players.front().swapCard(temp, p));
         }
         else {
             Pos p;
             cout << "Which card should be swapped?" << endl;
             p.ui_getPos();
-            players.front().swapDiscardedCard(p);
+            us->deposit(players.front().swapDiscardedCard(p));
         }
         players.front().print_field();
         //Check if column haS 3 cards of the same value
@@ -139,5 +143,12 @@ void Game::play() {
 
 
     } while (!is_last_round);
+
+    //t0odo
+    /*
+     * - count points
+     * - do one last round without the player who finished
+     * -
+    */
 }
 

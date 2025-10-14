@@ -19,6 +19,7 @@ public:
     ~Player()=default;
 
     Card swapCard(Pos p);
+    Card swapCard(Card &c, Pos &p);
     Card swapDiscardedCard(Pos p);
     void playCard();
     void revealCard(Pos &p);
