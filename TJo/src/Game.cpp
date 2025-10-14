@@ -9,7 +9,7 @@ Game::Game(std::shared_ptr<Card_shuffler> &cs_in, int n_players) {
 
     for (int i = 0; i < n_players; i++) {
         //players.push_back(Player(cs));
-        players.emplace(cs, us);        //Geil emplace > push
+        players.emplace(cs, us, i);        //Geil emplace > push
         scores.push_back(vector<int>({}));
     }
     us = make_shared<used_stack>();
@@ -22,7 +22,7 @@ Game::Game(int n_players) {
     this->n_players = n_players;
 
     for (int i = 0; i < n_players; i++) {
-        players.emplace(cs, us);
+        players.emplace(cs, us, i);
         scores.push_back(vector<int>({}));
     }
 }

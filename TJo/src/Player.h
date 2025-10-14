@@ -12,10 +12,10 @@ private:
     Field field;
     std::shared_ptr<Card_shuffler> cs;
     std::shared_ptr<used_stack> us;
-
+    int num;
 public:
     //Player();
-    Player(std::shared_ptr<Card_shuffler> &cs_in, std::shared_ptr<used_stack> &us);
+    Player(std::shared_ptr<Card_shuffler> &cs_in, std::shared_ptr<used_stack> &us, int num_in);
     ~Player()=default;
 
     Card swapCard(Pos p);
