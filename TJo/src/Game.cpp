@@ -154,6 +154,7 @@ void Game::play() {
         cout << "Player number " << temp.get_num() << " got " << temp.get_points() << " Points!!" << endl;
     }
 
+
     //find player with least points
     int min_val = *min_element(points.begin(), points.end());
     vector<int> winners;        //contains numbers of winning players
