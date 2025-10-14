@@ -30,6 +30,8 @@ public:
     //void update();
     void reveal_card(Pos &p);
     bool all_cards_uncovered();
+
+    int get_points();
 };
 
 

@@ -27,7 +27,8 @@ public:
     void print_field();
 
     bool all_cards_uncovered();
-
+    int get_num();
+    int get_points();
     // 4x3 Matrix with Cards
     //std::vector <std::vector <Card>> hand;
 };

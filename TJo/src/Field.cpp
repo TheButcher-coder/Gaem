@@ -75,3 +75,14 @@ bool Field::all_cards_uncovered() {
     }
     return ret;
 }
+
+int Field::get_points() {
+    int sum = 0;
+
+    for (auto &column: cards) {
+        for (auto &card: column) {
+            sum += card.get_val();
+        }
+    }
+    return sum;
+}

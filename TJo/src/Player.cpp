@@ -90,3 +90,11 @@ Card Player::swapDiscardedCard(Pos p) {
 bool Player::all_cards_uncovered() {
     return field.all_cards_uncovered();
 }
+
+int Player::get_num() {
+    return num;
+}
+
+int Player::get_points() {
+    return field.get_points();
+}

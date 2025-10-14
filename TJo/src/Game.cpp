@@ -144,10 +144,29 @@ void Game::play() {
 
     } while (!is_last_round);
 
+    vector<int> points(n_players);
+    while (!players.empty()) {
+        auto &temp = players.front();
+        players.pop();
+        int point_temp = temp.get_points();
+        points[temp.get_num()] = point_temp;
 
+        cout << "Player number " << temp.get_num() << " got " << temp.get_points() << " Points!!" << endl;
+    }
+
+    //find player with least points
+    int min_val = *min_element(points.begin(), points.end());
+    vector<int> winners;        //contains numbers of winning players
+    for (int i=0; i < n_players; i++) {
+        if (points[i] == min_val) winners.push_back(i);
+    }
+
+    cout << "Congrats!!!" << endl;
+    for (auto &w: winners) cout << w << endl;
+    cout << "WON!" << endl;
     //t0odo
     /*
-     * - count points
+     * - count points and print by empyting queue
      * - do one last round without the player who finished
      * -
     */
