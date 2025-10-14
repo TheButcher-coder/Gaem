@@ -15,7 +15,7 @@ private:
 
 public:
     //Game();
-    Game(std::shared_ptr<Card_shuffler> cs_in, int n_players);
+    Game(std::shared_ptr<Card_shuffler> &cs_in, int n_players);
     Game(int n_players);
     int getNumPlayers();
     void print_fields();

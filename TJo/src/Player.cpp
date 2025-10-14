@@ -21,8 +21,9 @@ Player::Player() {
 }
 */
 
-Player::Player( std::shared_ptr<Card_shuffler> &cs_in): field(cs_in) {
+Player::Player( std::shared_ptr<Card_shuffler> &cs_in, std::shared_ptr<used_stack> &us_in): field(cs_in) {
     cs = cs_in;
+    us = us_in;
     field = Field(cs);
 }
 

@@ -15,7 +15,7 @@ private:
 
 public:
     //Player();
-    Player(std::shared_ptr<Card_shuffler> &cs_in);
+    Player(std::shared_ptr<Card_shuffler> &cs_in, std::shared_ptr<used_stack> &us);
     ~Player()=default;
 
     Card swapCard(Pos p);

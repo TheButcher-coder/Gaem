@@ -3,13 +3,13 @@
 #include "used_stack.h"
 
 
-Game::Game(std::shared_ptr<Card_shuffler> cs_in, int n_players) {
+Game::Game(std::shared_ptr<Card_shuffler> &cs_in, int n_players) {
     cs = cs_in;
     this->n_players = n_players;
 
     for (int i = 0; i < n_players; i++) {
         //players.push_back(Player(cs));
-        players.emplace(cs);        //Geil emplace > push
+        players.emplace(cs, us);        //Geil emplace > push
         scores.push_back(vector<int>({}));
     }
     us = make_shared<used_stack>();
@@ -22,7 +22,7 @@ Game::Game(int n_players) {
     this->n_players = n_players;
 
     for (int i = 0; i < n_players; i++) {
-        players.emplace(cs);
+        players.emplace(cs, us);
         scores.push_back(vector<int>({}));
     }
 }
@@ -111,10 +111,11 @@ void Game::play() {
         char in;
         do {
             cout << "Draw card from draw pile(A) or discarded pile(B): " << endl;
+            cout << "discard pile: " << us->get_top() << endl;
+
             cin >> in;
         } while (in != 'A' && in != 'a' && in != 'B' && in != 'b');
 
-        cout << "discard pile: " << us->get_top() << endl;
         if (in == 'A' || in == 'a') {
             Pos p;
             cout << "Which card should be swapped?" << endl;
@@ -132,7 +133,7 @@ void Game::play() {
         //Check if player finished the game
         is_last_round = players.front().all_cards_uncovered();
 
-        Player temp = players.front();
+        Player temp = players.front();      //Rotate players
         players.push(temp);
         players.pop();
 
