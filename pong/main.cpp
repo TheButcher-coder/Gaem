@@ -16,7 +16,7 @@ int get_sec() {
     y2k.tm_hour = 0;   y2k.tm_min = 0; y2k.tm_sec = 0;
     y2k.tm_year = 100; y2k.tm_mon = 0; y2k.tm_mday = 1;
 
-    return difftime(timer,mktime(&y2k));;
+    return static_cast<int>(difftime(timer, mktime(&y2k)));
 }
 
 int get_millisec() {
@@ -116,7 +116,7 @@ void pong() {
         win.draw(p2);
         if (win.pollEvent()->getIf<sf::Event::Closed>()) win.close();   //close window if close button pressed
         win.display();
-        //std::this_thread::sleep_for(std::chrono::milliseconds(2));     //tweak für andere geschwindigkeiten
+        //std::this_thread::sleep_for(std::chrono::milliseconds(1));     //tweak für andere geschwindigkeiten
     }
     std::cout << "Player1: " << scorep1 << " POINTS!!" << std::endl << "Player2: " << scorep2 << " POINTS!!" << std::endl;
 }
