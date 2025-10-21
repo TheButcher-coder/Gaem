@@ -57,6 +57,8 @@ namespace linalg {//Vllt namespace mit matrix
         }
 
         Matrix operator*(Matrix M2) {
+
+            //Optimize to recursive algo -> faster better stronger!
             auto m1=val, m2=M2.get_arr();
             int r1=m1.size(), c1=m1[0].size(), r2=m2.size(), c2=m2[0].size();
             Matrix out(r1, c2);
