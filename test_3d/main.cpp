@@ -168,11 +168,7 @@ struct Tri_3d {
 private:
     Point p1, p2, p3;
 public:
-    Tri_3d(Point pin1, Point pin2, Point pin3): p1(), p2(), p3(){
-        p1 = pin1;
-        p2 = pin2;
-        p3 = pin3;
-    }
+    Tri_3d(Point pin1, Point pin2, Point pin3): p1(pin1), p2(pin2), p3(pin3){}
     Point at(int i) {
         if (i == 0) return p1;
         else if (i == 1) return p2;
@@ -245,53 +241,58 @@ int main() {
     vector<Tri_3d> trs;
 
     //manueller input des Würfels
-    trs.emplace_back(Point(0, 0, 0), Point(0, 0, 1), Point(0, 1, 0));
-    trs.emplace_back(Point(0, 0, 1), Point(0, 1, 1), Point(0, 1, 0));
-    trs.emplace_back(Point(0, 0, 1), Point(0, 1, 1), Point(1, 1, 1));
-    trs.emplace_back(Point(0, 0, 1), Point(1, 0, 1), Point(1, 1, 1));
-    trs.emplace_back(Point(0, 1, 0), Point(0, 1, 1), Point(1, 1, 1));
+    int sz = 400;
+    trs.emplace_back(Point(0, 0, 0), Point(0, 0, sz), Point(0, sz, 0));
+    trs.emplace_back(Point(0, 0, sz), Point(0, sz, sz), Point(0, sz, 0));
+    trs.emplace_back(Point(0, 0, sz), Point(0, sz, sz), Point(sz, sz, sz));
+    trs.emplace_back(Point(0, 0, sz), Point(sz, 0, sz), Point(sz, sz, sz));
+    trs.emplace_back(Point(0, sz, 0), Point(0, sz, sz), Point(sz, sz, sz));
 
     //Cam tests
-    Cam c{};
-    auto t = c.project(trs[0]);
-    cout << "pooper" << endl;
-    /*
-    sf::RenderWindow win(sf::VideoMode({800, 600}), "pooper");
+    sf::RenderWindow win(sf::VideoMode({800, 800}), "pooper");
     win.setFramerateLimit(60);
+    double i = 0;
+    while (win.isOpen()) {
+        while (i < 50*M_PI) {
+            i += 0.01;
+            cout << i << endl;
+            Cam c(-10, 0, 1000, i, -M_PI/2, 0, 600, 600);
+            auto t = c.project(trs[0]);
+            auto tzwei = c.project(trs[1]);
 
-    // create an array of 3 vertices that define a triangle primitive
-    sf::VertexArray triangle(sf::PrimitiveType::Triangles, 3);
 
-    // define the position of the triangle's points
-    triangle[0].position = sf::Vector2f(10.f, 10.f);
-    triangle[1].position = sf::Vector2f(100.f, 10.f);
-    triangle[2].position = sf::Vector2f(100.f, 100.f);
 
-    // define the color of the triangle's points
-    triangle[0].color = sf::Color::Red;
-    triangle[1].color = sf::Color::Blue;
-    triangle[2].color = sf::Color::Green;
+            vector<sf::VertexArray> triangles;
+            //int i = 0;
+            for (auto tri: trs) {
+                auto temp = c.project(tri);
+                temp[0].color = sf::Color::Red;
+                temp[1].color = sf::Color::Blue;
+                temp[2].color = sf::Color::Green;
 
-    // no texture coordinates here, we'll see that later
-    while (win.isOpen())
-    {
-        // check all the window's events that were triggered since the last iteration of the loop
-        while (const optional event = win.pollEvent())
-        {
-            // "close requested" event: we close the window
-            if (event->is<sf::Event::Closed>())
-                win.close();
+                triangles.emplace_back(temp);
+            }
+
+
+            // no texture coordinates here, we'll see that later
+
+            // check all the window's events that were triggered since the last iteration of the loop
+            while (const optional event = win.pollEvent())
+            {
+                // "close requested" event: we close the window
+                if (event->is<sf::Event::Closed>())
+                    win.close();
+            }
+
+            // clear the window with black color
+            win.clear(sf::Color::Black);
+
+            for (auto &tri: triangles) {
+                win.draw(tri);
+            }
+            // end the current frame
+            win.display();
         }
-
-        // clear the window with black color
-        win.clear(sf::Color::Black);
-        win.draw(triangle);
-        // draw everything here...
-        // window.draw(...);
-
-        // end the current frame
-        win.display();
     }
-    */
     return 0;
 }
