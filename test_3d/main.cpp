@@ -207,12 +207,6 @@ public:
     }
 
     sf::VertexArray project(Tri_3d &in) {
-        /*
-        vector<linalg::Matrix> ps;
-        ps.emplace_back(vector<vector<double>> ({{static_cast<double>(in.P1().getp()[0])}, {static_cast<double>(in.P1().getp()[1])}}));
-        ps.emplace_back(vector<vector<double>> ({{static_cast<double>(in.P2().getp()[0])}, {static_cast<double>(in.P2().getp()[1])}}));
-        ps.emplace_back(vector<vector<double>> ({{static_cast<double>(in.P3().getp()[0])}, {static_cast<double>(in.P3().getp()[1])}}));
-*/
         sf::VertexArray out(sf::PrimitiveType::Triangles, 3);
         for (int i = 0; i < 3; i++) {
             auto temp = (trans*in.at(i)).getp();
@@ -220,6 +214,16 @@ public:
         }
         return out;
     }
+    void set_rx(double rxin) {
+        trans = trans*linalg::get_rx(rxin);
+    }
+    void set_ry(double ryin) {
+        trans = trans*linalg::get_ry(ryin);
+    }
+    void set_rz(double rzin) {
+        trans = trans*linalg::get_rz(rzin);
+    }
+
 };
 using namespace linalg;
 int main() {
@@ -252,15 +256,26 @@ int main() {
     sf::RenderWindow win(sf::VideoMode({800, 800}), "pooper");
     win.setFramerateLimit(60);
     double i = 0;
+    Cam c(-1000, 1000, 1000, 0, -M_PI/2, 0, 600, 600);
+
+    sf::Vector2i old_pos = sf::Mouse::getPosition();
     while (win.isOpen()) {
-        while (i < 50*M_PI) {
+        //while (i < 50*M_PI) {
             i += 0.01;
             cout << i << endl;
-            Cam c(-10, 0, 1000, i, -M_PI/2, 0, 600, 600);
+
+            //Get mouse data
+            sf::Vector2i new_pos = sf::Mouse::getPosition(win); // window is a sf::Window
+            sf::Vector2i dpos = old_pos-new_pos;
+            old_pos = new_pos;
+
+        //map mouse pos to rotation of object
+            c.set_rx(static_cast<double>(dpos.x)/100.0);
+            c.set_ry(static_cast<double>(dpos.y)/100.0);
+
+
             auto t = c.project(trs[0]);
             auto tzwei = c.project(trs[1]);
-
-
 
             vector<sf::VertexArray> triangles;
             //int i = 0;
@@ -292,7 +307,7 @@ int main() {
             }
             // end the current frame
             win.display();
-        }
+        //}
     }
     return 0;
 }
