@@ -281,61 +281,59 @@ int main() {
     sf::Time currentTime;
 
     while (win.isOpen()) {
-        //while (i < 50*M_PI) {
-            i += 0.01;
+        i += 0.01;
 
-            //Get mouse data
-            sf::Vector2i new_pos = sf::Mouse::getPosition(win); // window is a sf::Window
-            sf::Vector2i dpos = old_pos-new_pos;
-            old_pos = new_pos;
+        //Get mouse data
+        sf::Vector2i new_pos = sf::Mouse::getPosition(win); // window is a sf::Window
+        sf::Vector2i dpos = old_pos-new_pos;
+        old_pos = new_pos;
 
         //map mouse pos to rotation of object
-            c.set_rx(static_cast<double>(dpos.x)/100.0);
-            c.set_ry(static_cast<double>(dpos.y)/100.0);
+        c.set_rx(static_cast<double>(dpos.x)/100.0);
+        c.set_ry(static_cast<double>(dpos.y)/100.0);
 
 
-            auto t = c.project(trs[0]);
-            auto tzwei = c.project(trs[1]);
+        auto t = c.project(trs[0]);
+        auto tzwei = c.project(trs[1]);
 
-            vector<sf::VertexArray> triangles;
-            //int i = 0;
-            for (auto tri: trs) {
-                //Maybe having something like a variable plotting order is good?
-                //right now you get artifacts
-                //maybe dont plot vertecis that arent on screen
-                auto temp = c.project(tri);
-                temp[0].color = sf::Color::Red;
-                temp[1].color = sf::Color::Blue;
-                temp[2].color = sf::Color::Green;
+        vector<sf::VertexArray> triangles;
+        //int i = 0;
+        for (auto tri: trs) {
+            //Maybe having something like a variable plotting order is good?
+            //right now you get artifacts
+            //maybe dont plot vertecis that arent on screen
+            auto temp = c.project(tri);
+            temp[0].color = sf::Color::Red;
+            temp[1].color = sf::Color::Blue;
+            temp[2].color = sf::Color::Green;
 
-                triangles.emplace_back(temp);
-            }
+            triangles.emplace_back(temp);
+        }
 
 
-            // no texture coordinates here, we'll see that later
+        // no texture coordinates here, we'll see that later
 
-            // check all the window's events that were triggered since the last iteration of the loop
-            while (const optional event = win.pollEvent())
-            {
-                // "close requested" event: we close the window
-                if (event->is<sf::Event::Closed>())
-                    win.close();
-            }
+        // check all the window's events that were triggered since the last iteration of the loop
+        while (const optional event = win.pollEvent())
+        {
+            // "close requested" event: we close the window
+            if (event->is<sf::Event::Closed>())
+                win.close();
+        }
 
-            // clear the window with black color
-            win.clear(sf::Color::Black);
+        // clear the window with black color
+        win.clear(sf::Color::Black);
 
-            for (auto &tri: triangles) {
-                win.draw(tri);
-            }
-            // end the current frame
-            win.display();
+        for (auto &tri: triangles) {
+            win.draw(tri);
+        }
+        // end the current frame
+        win.display();
 
-            currentTime = clock.getElapsedTime();
-            fps = 1.0f / (currentTime.asSeconds() - previousTime.asSeconds()); // the asSeconds returns a float
-            std::cout << "fps =" << floor(fps) << std::endl; // flooring it will make the frame rate a rounded number
-            previousTime = currentTime;
-        //}
+        currentTime = clock.getElapsedTime();
+        fps = 1.0f / (currentTime.asSeconds() - previousTime.asSeconds()); // the asSeconds returns a float
+        std::cout << "fps =" << floor(fps) << std::endl; // flooring it will make the frame rate a rounded number
+        previousTime = currentTime;
     }
     return 0;
 }
