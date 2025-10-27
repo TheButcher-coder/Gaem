@@ -2,12 +2,25 @@
 #include <vector>
 #include <iostream>
 #include <cmath>
-
+#include <chrono>
 
 using namespace std;
 
 
+double get_millis() {
+    // Get the current time from the system clock
+    auto now = chrono::system_clock::now();
 
+    // Convert the current time to time since epoch
+    auto duration = now.time_since_epoch();
+
+    // Convert duration to milliseconds
+    auto milliseconds
+        = chrono::duration_cast<chrono::milliseconds>(
+              duration)
+              .count();
+    return static_cast<double> (milliseconds);
+}
 struct Point {
 protected:
     vector<int> p;
@@ -261,10 +274,15 @@ int main() {
     Cam c(400, 400, 0, 0, -M_PI/2, 0, 600, 600);
 
     sf::Vector2i old_pos = sf::Mouse::getPosition();
+
+    float fps;
+    sf::Clock clock = sf::Clock();
+    sf::Time previousTime = clock.getElapsedTime();
+    sf::Time currentTime;
+
     while (win.isOpen()) {
         //while (i < 50*M_PI) {
             i += 0.01;
-            cout << i << endl;
 
             //Get mouse data
             sf::Vector2i new_pos = sf::Mouse::getPosition(win); // window is a sf::Window
@@ -282,6 +300,9 @@ int main() {
             vector<sf::VertexArray> triangles;
             //int i = 0;
             for (auto tri: trs) {
+                //Maybe having something like a variable plotting order is good?
+                //right now you get artifacts
+                //maybe dont plot vertecis that arent on screen
                 auto temp = c.project(tri);
                 temp[0].color = sf::Color::Red;
                 temp[1].color = sf::Color::Blue;
@@ -309,6 +330,11 @@ int main() {
             }
             // end the current frame
             win.display();
+
+            currentTime = clock.getElapsedTime();
+            fps = 1.0f / (currentTime.asSeconds() - previousTime.asSeconds()); // the asSeconds returns a float
+            std::cout << "fps =" << floor(fps) << std::endl; // flooring it will make the frame rate a rounded number
+            previousTime = currentTime;
         //}
     }
     return 0;
