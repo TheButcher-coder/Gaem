@@ -136,7 +136,7 @@ namespace linalg {
             auto temp = pin.getp();
             vector<int> res(3);
             for (int i = 0; i < 3; i++) {
-                res[i] = val[i][0]*temp[0] + val[i][1]*temp[1] + val[i][2]*temp[2];
+                res[i] = val[i][0]*temp[0] + val[i][1]*temp[1] + val[i][2]*temp[2] + val[i][3];
             }
             //Point out(res);
             return Point(res);
@@ -225,6 +225,8 @@ public:
     }
 
 };
+
+
 using namespace linalg;
 int main() {
     //test of matmul
@@ -245,7 +247,7 @@ int main() {
     vector<Tri_3d> trs;
 
     //manueller input des Würfels
-    int sz = 400;
+    int sz = 250;
     trs.emplace_back(Point(0, 0, 0), Point(0, 0, sz), Point(0, sz, 0));
     trs.emplace_back(Point(0, 0, sz), Point(0, sz, sz), Point(0, sz, 0));
     trs.emplace_back(Point(0, 0, sz), Point(0, sz, sz), Point(sz, sz, sz));
@@ -256,7 +258,7 @@ int main() {
     sf::RenderWindow win(sf::VideoMode({800, 800}), "pooper");
     win.setFramerateLimit(60);
     double i = 0;
-    Cam c(-1000, 1000, 1000, 0, -M_PI/2, 0, 600, 600);
+    Cam c(400, 400, 0, 0, -M_PI/2, 0, 600, 600);
 
     sf::Vector2i old_pos = sf::Mouse::getPosition();
     while (win.isOpen()) {
