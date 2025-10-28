@@ -179,23 +179,38 @@ namespace linalg {
 
 struct Tri_3d {
 private:
-    Point p1, p2, p3;
+    vector<Point> p;
+    //Point p1, p2, p3;
 public:
-    Tri_3d(Point pin1, Point pin2, Point pin3): p1(pin1), p2(pin2), p3(pin3){}
+    Tri_3d() {
+        p = vector<Point> (3);
+    }
+    Tri_3d(const Point& pin1, const Point& pin2, const Point& pin3): p({pin1, pin2, pin3}){}
     Point at(int i) {
-        if (i == 0) return p1;
-        else if (i == 1) return p2;
-        else if (i == 2) return p3;
+        if (i < 3) return p[i];
         else exit(-690);
     }
-    Point P1() {
-        return p1;
+    void set(Point &pin, int i) {
+        if (i < 3) p[i]=pin;
+        else exit(-690);
     }
-    Point P2() {
-        return p2;
+
+    int get_biggest_z() {
+        vector<int> z = {p[0].getp()[2], p[1].getp()[2], p[2].getp()[2]};
+        return *max_element(z.begin(), z.end());
     }
-    Point P3() {
-        return p3;
+
+    int get_smallest_z() {
+        vector<int> z = {p[0].getp()[2], p[1].getp()[2], p[2].getp()[2]};
+        return *min_element(z.begin(), z.end());
+    }
+
+    sf::VertexArray get_vert() {
+        sf::VertexArray out(sf::PrimitiveType::Triangles, 3);
+        for (int i = 0; i < 3; i++) {
+            out[i].position = sf::Vector2f(static_cast<float>(p[i].getp()[0]), static_cast<float>(p[i].getp()[1]));
+        }
+        return out;
     }
 
 };
@@ -227,6 +242,18 @@ public:
         }
         return out;
     }
+
+    Tri_3d project_tri_3d(Tri_3d &in) {
+        Tri_3d out{};
+        for (int i=0; i<3; i++) {
+            auto temp = trans*in.at(i);
+            out.set(temp, i);
+        }
+        return out;
+    }
+
+
+
     void set_rx(double rxin) {
         trans = trans*linalg::get_rx(rxin);
     }
@@ -239,6 +266,11 @@ public:
 
 };
 
+bool comp_tri(Tri_3d a, Tri_3d b) {
+    int az = a.get_biggest_z();
+    int bz = b.get_biggest_z();
+    return az > bz;
+}
 
 using namespace linalg;
 int main() {
@@ -266,6 +298,7 @@ int main() {
     trs.emplace_back(Point(0, 0, sz), Point(0, sz, sz), Point(sz, sz, sz));
     trs.emplace_back(Point(0, 0, sz), Point(sz, 0, sz), Point(sz, sz, sz));
     trs.emplace_back(Point(0, sz, 0), Point(0, sz, sz), Point(sz, sz, sz));
+
 
     //Cam tests
     sf::RenderWindow win(sf::VideoMode({800, 800}), "pooper");
@@ -297,19 +330,26 @@ int main() {
         auto tzwei = c.project(trs[1]);
 
         vector<sf::VertexArray> triangles;
+
         //int i = 0;
-        for (auto tri: trs) {
+        for (auto &tri: trs) {
             //Maybe having something like a variable plotting order is good?
             //right now you get artifacts
             //maybe dont plot vertecis that arent on screen
-            auto temp = c.project(tri);
+            tri = c.project_tri_3d(tri);
+        }
+        //Sort triangles after z value for plot value
+
+        sort(trs.begin(), trs.end(), comp_tri);
+
+        for (auto tri: trs) {
+            auto temp = tri.get_vert();
             temp[0].color = sf::Color::Red;
             temp[1].color = sf::Color::Blue;
             temp[2].color = sf::Color::Green;
 
             triangles.emplace_back(temp);
         }
-
 
         // no texture coordinates here, we'll see that later
 
