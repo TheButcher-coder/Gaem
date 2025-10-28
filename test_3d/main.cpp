@@ -268,8 +268,8 @@ public:
 };
 
 bool comp_tri(Tri_3d a, Tri_3d b) {
-    int az = a.get_biggest_z();
-    int bz = b.get_biggest_z();
+    int az = a.get_smallest_z();
+    int bz = b.get_smallest_z();
     return az < bz;
 }
 
