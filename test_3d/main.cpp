@@ -41,9 +41,10 @@ public:
     void setp(vector<int> &pin) {
         p = pin;
     }
-    Point operator=(Point &p) {
+    Point operator=(Point &pin) {
         //Point temp(p);
-        return p;
+        p = pin.getp();
+        return *this;
     }
 };
 
@@ -330,19 +331,21 @@ int main() {
         auto tzwei = c.project(trs[1]);
 
         vector<sf::VertexArray> triangles;
-
+        vector<Tri_3d> tris;
         //int i = 0;
+        //tris.reserve(trs.size());
+        tris.reserve(trs.size());
         for (auto &tri: trs) {
             //Maybe having something like a variable plotting order is good?
             //right now you get artifacts
             //maybe dont plot vertecis that arent on screen
-            tri = c.project_tri_3d(tri);
+            tris.push_back( c.project_tri_3d(tri));
         }
         //Sort triangles after z value for plot value
 
-        sort(trs.begin(), trs.end(), comp_tri);
+        sort(tris.begin(), tris.end(), comp_tri);
 
-        for (auto tri: trs) {
+        for (auto tri: tris) {
             auto temp = tri.get_vert();
             temp[0].color = sf::Color::Red;
             temp[1].color = sf::Color::Blue;
