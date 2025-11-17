@@ -303,7 +303,7 @@ int main() {
 
     //Cam tests
     sf::RenderWindow win(sf::VideoMode({800, 800}), "pooper");
-    win.setFramerateLimit(60);
+    //win.setFramerateLimit(60);
     double i = 0;
     Cam c(400, 400, 0, 0, -M_PI/2, 0, 600, 600);
 
@@ -327,14 +327,11 @@ int main() {
         c.set_ry(static_cast<double>(dpos.y)/100.0);
 
 
-        auto t = c.project(trs[0]);
-        auto tzwei = c.project(trs[1]);
-
         vector<sf::VertexArray> triangles;
         vector<Tri_3d> tris;
-        //int i = 0;
-        //tris.reserve(trs.size());
         tris.reserve(trs.size());
+
+        
         for (auto &tri: trs) {
             //Maybe having something like a variable plotting order is good?
             //right now you get artifacts
@@ -353,8 +350,9 @@ int main() {
 
             triangles.emplace_back(temp);
         }
+        //check for culling
 
-        // no texture coordinates here, we'll see that later
+
 
         // check all the window's events that were triggered since the last iteration of the loop
         while (const optional event = win.pollEvent())
