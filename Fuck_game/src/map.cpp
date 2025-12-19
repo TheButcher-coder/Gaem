@@ -41,9 +41,7 @@ bool map::load(const std::filesystem::path &tileset, unsigned int width, unsigne
              **/
             //color vertices according to map
             auto color = img.getPixel(sf::Vector2u(i, j));
-            auto r = static_cast<int>(color.r);
-            //color.a = 0;
-            cout << "R: " << static_cast<int>(color.r) << endl << "G: " << endl << static_cast<int>(color.g) << endl << "B: " << static_cast<int>(color.b) << endl << endl;
+            //cout << "R: " << static_cast<int>(color.r) << endl << "G: " << endl << static_cast<int>(color.g) << endl << "B: " << static_cast<int>(color.b) << endl << endl;
             triangles[0].color = sf::Color(color);
             triangles[1].color = sf::Color(color);
             triangles[2].color = sf::Color(color);

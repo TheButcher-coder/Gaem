@@ -1,7 +1,9 @@
-#include <iostream>
 #include <SFML/Graphics.hpp>
+#include <iostream>
+#include <list>
 
 #include "./src/map.h"
+#include "./src/player.h"
 
 using namespace std;
 
@@ -69,26 +71,25 @@ using namespace std;
 
  */
 
+
+//FUCK ICH KANN JA ALES MIT SPRITES MACHEN
 int main() {
+    int x = 320, y = 180;
     //test of map with one simple texture as map
-    //load texture
-    //sf::Texture texture("../sprites/Map/Sprite-0001.png");//, false, sf::IntRect({10, 10}, {10, 10}));
-    //texture.setRepeated(true);
-    //sf::Sprite sp(texture);
+    vector<sf::Drawable*> draw_queue;
 
-
-    constexpr std::array level = {
-        0
-    };
-
+    //map init
     map tm;
-    tm.load("../sprites/Map/Sprite-0001.png", 320, 180);
-    //sp.setPosition(sf::Vector2f({25, 25}));
-    //sp.setScale(sf::Vector2f({10, 10}));
-    //sp.setTextureRect(sf::IntRect({10, 10}, {10, 10}));
+    draw_queue.push_back(&tm);
+    tm.load("../sprites/Map/Sprite-0001.png", x, y);
 
+
+    //test of one simple char
+    player p;
+    draw_queue.push_back(&p);
+    p.load("../sprites/characters/char1.png", 30, 30);
     // update the texture from the current contents of the window
-    sf::RenderWindow win(sf::VideoMode({320, 180}), "pooper");
+    sf::RenderWindow win(sf::VideoMode(sf::Vector2u(x, y)), "pooper");
 
     while (win.isOpen()) {
         while (const optional event = win.pollEvent())
@@ -98,8 +99,38 @@ int main() {
                 win.close();
         }
         win.clear(sf::Color::Black);
-        //win.draw(sp);
-        win.draw(tm);
+
+        //Move char if wsad is pressed
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W)) {
+            cout << "Pressed: W" << endl;
+            auto pos = p.getpos();
+            pos.y += 1;
+            p.move(pos);
+        }
+        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)) {
+            cout << "Pressed: S" << endl;
+            auto pos = p.getpos();
+            pos.y -= 1;
+            p.move(pos);
+        }
+        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A)) {
+            cout << "Pressed: A" << endl;
+            auto pos = p.getpos();
+            pos.x -= 1;
+            p.move(pos);
+
+        }
+        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D)) {
+            cout << "Pressed: D" << endl;
+            auto pos = p.getpos();
+            pos.x += 1;
+            p.move(pos);
+        }
+        cout << "Player pos X: " << p.getpos().x << "; Y: " << p.getpos().y << endl;
+        //Draw all objects
+        for (auto obj: draw_queue) {
+            win.draw(*obj);
+        }
         win.display();
     }
 

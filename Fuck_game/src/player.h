@@ -2,8 +2,8 @@
 // Created by Jakub on 19.12.25.
 //
 
-#ifndef MAP_H
-#define MAP_H
+#ifndef PLAYER_H
+#define PLAYER_H
 
 #include <SFML/Graphics.hpp>
 
@@ -13,15 +13,19 @@ private:
     sf::Texture     m_tileset;
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
-    int x, y;
+    int x=0, y=0;
+    int xs=0, ys=0;
 
 
 public:
     bool load(const std::filesystem::path &tileset, unsigned int width, unsigned int height);
-    void move(int x, int y);
+    void move(int xin, int yin);
+    void move(sf::Vector2u moveto);
+
     int getx();
     int gety();
 
+    sf::Vector2u getpos();
 };
 
 
