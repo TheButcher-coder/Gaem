@@ -4,6 +4,7 @@
 
 #include "./src/map.h"
 #include "./src/player.h"
+#include "src/Collision_rec.h"
 
 using namespace std;
 
@@ -30,8 +31,8 @@ using namespace std;
  Needed Code things(i think i need):
  - some sort of map class
  - player class
- - wepaons (No need to cathegorize into explosives, one time use or gunz. otu is just 1 ammo, and everything else is just some sort of gun
- Guns need following parameters:(velocity, expl radius, sprite, animation?, )
+ - wepaons (No need to cathegorize into explosives, one time use or gunz. otu is just 1 ammo, and everything else is
+ just some sort of gun Guns need following parameters:(velocity, expl radius, sprite, animation?, )
  - Usables (shit like jetpacks cause they are cool af)
  - sounds (cause farts are funy)
 
@@ -72,65 +73,92 @@ using namespace std;
  */
 
 
-//FUCK ICH KANN JA ALES MIT SPRITES MACHEN
+void drawBounds(sf::RenderWindow &win, const sf::FloatRect &b, sf::Color color) {
+    sf::RectangleShape r;
+    r.setPosition(b.position);
+    r.setSize(b.size);
+    r.setFillColor(sf::Color::Transparent);
+    r.setOutlineColor(color);
+    r.setOutlineThickness(1.f);
+    win.draw(r);
+}
+
+
+// FUCK ICH KANN JA ALES MIT SPRITES MACHEN
 int main() {
     int x = 320, y = 180;
-    //test of map with one simple texture as map
-    vector<sf::Drawable*> draw_queue;
 
-    //map init
-    map tm;
-    draw_queue.push_back(&tm);
-    tm.load("../sprites/Map/Sprite-0001.png", x, y);
+    // test of map with one simple texture as map
+    vector<sf::Drawable *> draw_queue;
 
+    // test of one rectangle
+    Collision_rec cr;
+    draw_queue.push_back(&cr);
+    cr.load({50, 25}, sf::Color::Red);
+    cr.setPosition({100.0, 100.0});
 
-    //test of one simple char
+    // test of one simple char
     player p;
     draw_queue.push_back(&p);
     p.load("../sprites/characters/char1.png", 30, 30);
+
+
     // update the texture from the current contents of the window
     sf::RenderWindow win(sf::VideoMode(sf::Vector2u(x, y)), "pooper");
 
+    win.setFramerateLimit(60);
+
+
     while (win.isOpen()) {
-        while (const optional event = win.pollEvent())
-        {
+        while (const optional event = win.pollEvent()) {
             // "close requested" event: we close the window
             if (event->is<sf::Event::Closed>())
                 win.close();
         }
-        win.clear(sf::Color::Black);
+        win.clear(sf::Color::White);
 
-        //Move char if wsad is pressed
+        // if (!p.getGlobalBounds().findIntersection(cr.getGlobalBounds())) {
+        // Move char if wsad is pressed
+        sf::Vector2f oldpos = p.getPosition();
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W)) {
-            cout << "Pressed: W" << endl;
-            auto pos = p.getpos();
-            pos.y += 1;
-            p.move(pos);
-        }
-        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)) {
-            cout << "Pressed: S" << endl;
-            auto pos = p.getpos();
+            // cout << "Pressed: W" << endl;
+            auto pos = p.getPosition();
             pos.y -= 1;
-            p.move(pos);
+            p.setPosition(pos);
         }
-        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A)) {
-            cout << "Pressed: A" << endl;
-            auto pos = p.getpos();
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)) {
+            // cout << "Pressed: S" << endl;
+            auto pos = p.getPosition();
+            pos.y += 1;
+            p.setPosition(pos);
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A)) {
+            // cout << "Pressed: A" << endl;
+            auto pos = p.getPosition();
             pos.x -= 1;
-            p.move(pos);
-
+            p.setPosition(pos);
         }
-        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D)) {
-            cout << "Pressed: D" << endl;
-            auto pos = p.getpos();
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D)) {
+            // cout << "Pressed: D" << endl;
+            auto pos = p.getPosition();
             pos.x += 1;
-            p.move(pos);
+            p.setPosition(pos);
         }
-        cout << "Player pos X: " << p.getpos().x << "; Y: " << p.getpos().y << endl;
-        //Draw all objects
+        auto b1 = p.getGlobalBounds();
+        auto b2 = cr.getGlobalBounds();
+        auto temp = b1.findIntersection(b2);
+        if (temp) {
+            cout << "COLLIDING!" << endl;
+            p.setPosition(oldpos);
+        }
+        //}
+        // cout << "Player pos X: " << p.getPosition().x << "; Y: " << p.getPosition().y << endl;
+        // Draw all objects
         for (auto obj: draw_queue) {
             win.draw(*obj);
         }
+        drawBounds(win, p.getGlobalBounds(), sf::Color::Red);
+        drawBounds(win, cr.getGlobalBounds(), sf::Color::Red);
         win.display();
     }
 

@@ -26,6 +26,8 @@ public:
     int gety();
 
     sf::Vector2u getpos();
+
+    sf::FloatRect getGlobalBounds();
 };
 
 

@@ -11,11 +11,12 @@ class map: public sf::Drawable, public sf::Transformable  {
 private:
   sf::VertexArray m_vertices;
   sf::Texture     m_tileset;
+
   void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
 
 public:
-bool load(const std::filesystem::path &tileset, unsigned int width, unsigned int height);
+    bool load(const std::filesystem::path &tileset, unsigned int width, unsigned int height);
 };
 
 
